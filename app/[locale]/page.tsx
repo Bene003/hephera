@@ -23,15 +23,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
     name: "Hephera",
     description: dict.meta.description,
     url: `${SITE_URL}/${locale}`,
-    email: "contact@hephera.ca",
-    areaServed: "CA",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Montréal",
-      addressRegion: "QC",
-      addressCountry: "CA",
-    },
-    knowsLanguage: ["fr-CA", "en-CA"],
+    email: "contact@hephera.co",
+    knowsLanguage: ["fr", "en"],
     serviceType: Object.values(dict.serviceContent).map(
       (service) => service.name,
     ),

@@ -9,6 +9,7 @@ import {
   type MotionValue,
 } from "framer-motion";
 import { Icon } from "../icons";
+import { mapRange } from "./motion-utils";
 
 export interface ForgeValue {
   icon: string;
@@ -32,17 +33,6 @@ const subscribeMobile = (onChange: () => void) => {
 const scheduleOf = (index: number, count: number) => {
   const start = 0.06 + index * (0.7 / Math.max(count - 1, 1));
   return { start, release: start + 0.06, end: start + 0.16 };
-};
-
-/** Clamped piecewise interpolation, evaluated in JS. */
-const mapRange = (value: number, inputs: number[], outputs: number[]) => {
-  if (value <= inputs[0]) return outputs[0];
-  const last = inputs.length - 1;
-  if (value >= inputs[last]) return outputs[last];
-  const i = inputs.findIndex((stop) => value < stop) - 1;
-  const span = inputs[i + 1] - inputs[i];
-  const t = span === 0 ? 0 : (value - inputs[i]) / span;
-  return outputs[i] + (outputs[i + 1] - outputs[i]) * t;
 };
 
 const desktopTargets = [

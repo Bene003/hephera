@@ -164,16 +164,46 @@ export const en: Dictionary = {
     title: "What you can count on",
     subtitle: "No vague promises — here are our commitments, in numbers.",
     items: [
-      { value: "100%", label: "custom built, never a recycled template" },
-      { value: "< 90 d", label: "from first call to going live" },
-      { value: "One", label: "single point of contact, start to finish" },
       {
-        value: "4",
+        prefix: "",
+        from: 0,
+        to: 100,
+        suffix: "%",
+        label: "custom built, never a recycled template",
+      },
+      {
+        prefix: "< ",
+        from: 0,
+        to: 90,
+        suffix: " days",
+        label: "from first call to going live",
+      },
+      {
+        prefix: "",
+        from: 0,
+        to: 1,
+        suffix: "",
+        label: "single point of contact, start to finish",
+      },
+      {
+        prefix: "",
+        from: 0,
+        to: 4,
+        suffix: "",
         label: "disciplines under one roof: web, SEO, automation, consulting",
       },
-      { value: "2", label: "languages shipped by default, French and English" },
       {
-        value: "0",
+        prefix: "",
+        from: 0,
+        to: 2,
+        suffix: "",
+        label: "languages shipped by default, French and English",
+      },
+      {
+        prefix: "",
+        from: 9,
+        to: 0,
+        suffix: "",
         label: "hidden fees — a fixed quote signed off before we start",
       },
     ],
@@ -196,8 +226,8 @@ export const en: Dictionary = {
         a: "Yes. Every project ships with a simple interface for your text, images and pages, plus a short handover session. You're never locked in with your provider.",
       },
       {
-        q: "Do you work with clients outside Quebec?",
-        a: "Yes. We're based in Montreal and work remotely with French- and English-speaking clients anywhere.",
+        q: "Do you work remotely?",
+        a: "Yes. We work remotely with French- and English-speaking clients anywhere.",
       },
       {
         q: "What happens after launch?",
@@ -223,7 +253,7 @@ export const en: Dictionary = {
     info: {
       emailLabel: "Email",
       locationLabel: "Location",
-      locationValue: "Montreal, Quebec — remote everywhere else",
+      locationValue: "Remote, worldwide",
       hoursLabel: "Response time",
       hoursValue: "Under 24 business hours",
     },
@@ -277,6 +307,10 @@ export const en: Dictionary = {
     faqTitle: "Frequently asked",
     otherServices: "Other services",
     backToServices: "All services",
+    problemsEyebrow: "Before / after",
+    problemsTitle: "What it fixes",
+    beforeLabel: "Today",
+    afterLabel: "After",
   },
 
   serviceContent: {
@@ -351,6 +385,35 @@ export const en: Dictionary = {
           a: "We can write conversion- and SEO-oriented copy and coordinate photography. It's an option, never a requirement.",
         },
       ],
+      scene: {
+        lead: "Most of the sites we take over aren't ugly — they're slow, unclear, and they never actually ask the visitor for anything. Here's what changes, block by block.",
+        sceneAlt:
+          "A website rebuilds itself block by block: a slow, disordered page becomes a fast, readable page built around a single action.",
+        metricLabel: "Performance score",
+        metricFrom: 34,
+        metricTo: 98,
+        metricSr: "Performance score: from 34 to 98 out of 100.",
+        problems: [
+          {
+            before:
+              "Eight seconds before anything appears. Most visitors don't wait.",
+            after:
+              "Content on screen in under a second, even on an ordinary mobile connection.",
+          },
+          {
+            before:
+              "Ten seconds in, nobody can tell what you sell or who you sell it to.",
+            after:
+              "One clear promise on the first screen, and the rest of the page proving it.",
+          },
+          {
+            before:
+              "On a phone the text overflows and the buttons are too small to tap.",
+            after:
+              "Laid out for the thumb first, then opened up for the large screen.",
+          },
+        ],
+      },
     },
     seo: {
       icon: "search",
@@ -424,6 +487,35 @@ export const en: Dictionary = {
           a: "No — and be wary of anyone who does. We guarantee a method, transparency and honest reporting on what's moving and what isn't.",
         },
       ],
+      scene: {
+        lead: "Your customers are already searching for what you sell. The job isn't to create demand — it's to stop handing it to your competitors.",
+        sceneAlt:
+          "A search results page where a business climbs steadily from the third page to the top position.",
+        metricLabel: "Keywords on page one",
+        metricFrom: 2,
+        metricTo: 47,
+        metricSr: "Keywords ranking on page one: from 2 to 47.",
+        problems: [
+          {
+            before:
+              "You're on page three. Three people in four never go past the first one.",
+            after:
+              "Your service pages show up on the searches that end in a phone call.",
+          },
+          {
+            before:
+              "On Google Maps, a competitor three streets away is taking your neighbourhood.",
+            after:
+              "A complete listing, fed with reviews, holding a spot in the local three-pack.",
+          },
+          {
+            before:
+              "The day you pause the ads, the phone stops ringing that same afternoon.",
+            after:
+              "Visibility you own, still working without a monthly ad budget.",
+          },
+        ],
+      },
     },
     automation: {
       icon: "bot",
@@ -499,6 +591,34 @@ export const en: Dictionary = {
           a: "Yes. We keep access to the strict minimum, choose serious hosting and document every data flow.",
         },
       ],
+      scene: {
+        lead: "Nobody hired you to retype rows from one tool into another. Here are the hours we hand back, and how.",
+        sceneAlt:
+          "Repetitive manual tasks turn into an automated flow that connects your tools to each other.",
+        metricLabel: "Hours recovered per month",
+        metricFrom: 0,
+        metricTo: 22,
+        metricSr: "Hours recovered each month: from 0 to 22.",
+        problems: [
+          {
+            before:
+              "The same information gets typed by hand into three different tools.",
+            after:
+              "It's entered once and flows everywhere else, with no typos along the way.",
+          },
+          {
+            before:
+              "An enquiry that lands on Friday evening waits until Monday morning for a reply.",
+            after:
+              "It's acknowledged, qualified and routed within the minute, at any hour.",
+          },
+          {
+            before:
+              "Follow-ups and reports depend on someone remembering to send them.",
+            after: "They go out on their own, on time, and you stop thinking about them.",
+          },
+        ],
+      },
     },
     consulting: {
       icon: "target",
@@ -574,6 +694,33 @@ export const en: Dictionary = {
           a: "Yes. We often act as the technical lead alongside agencies, freelancers or in-house teams.",
         },
       ],
+      scene: {
+        lead: "The problem is almost never a shortage of ideas. It's not knowing which one to tackle first, or what you're willing to leave undone.",
+        sceneAlt:
+          "A wall of scattered ideas is sorted down to a short, ordered list of priorities.",
+        metricLabel: "Priorities kept out of 40 ideas",
+        metricFrom: 40,
+        metricTo: 6,
+        metricSr: "Priorities kept: 6 projects out of 40 starting ideas.",
+        problems: [
+          {
+            before: "Forty ideas in the meeting, none of them finished six months later.",
+            after: "Six ordered projects, costed, each with a date and an owner.",
+          },
+          {
+            before:
+              "Calls get made on gut feeling, or by whoever argues the loudest.",
+            after:
+              "They're made on your real numbers: cost per customer, margin, hours spent.",
+          },
+          {
+            before:
+              "Every vendor recommends exactly what they sell, and you arbitrate alone.",
+            after:
+              "One advisor with nothing to sell you downstream briefs and checks the rest.",
+          },
+        ],
+      },
     },
   },
 
@@ -589,7 +736,7 @@ export const en: Dictionary = {
       faq: "FAQ",
     },
     rights: "All rights reserved.",
-    location: "Montreal, Quebec",
+    location: "Remote, worldwide",
   },
 
   notFound: {

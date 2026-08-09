@@ -102,9 +102,7 @@ export function SiteFooter({
           <p>
             © {new Date().getFullYear()} Hephera. {footer.rights}
           </p>
-          <p className="font-display tracking-[0.18em] uppercase">
-            Built in Montreal
-          </p>
+          <p className="font-display tracking-[0.18em] uppercase">Built with intent</p>
         </div>
       </div>
     </footer>

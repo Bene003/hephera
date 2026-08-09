@@ -49,7 +49,7 @@ export function Hero({
               <ButtonLink href={`/${locale}/contact`} withArrow>
                 {hero.primaryCta}
               </ButtonLink>
-              <ButtonLink href={`/${locale}/services`} variant="ghost">
+              <ButtonLink href={`/${locale}#services`} variant="ghost">
                 {hero.secondaryCta}
               </ButtonLink>
             </div>

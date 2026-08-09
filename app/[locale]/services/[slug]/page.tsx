@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowUpRight, Check } from "lucide-react";
 
 import { Faq } from "@/components/sections/faq";
 import { FinalCta } from "@/components/sections/final-cta";
+import { ServiceProblems } from "@/components/sections/service-problems";
 import { Icon } from "@/components/icons";
 import { Reveal } from "@/components/reveal";
 import {
@@ -14,6 +15,7 @@ import {
   ForgeGlow,
   SectionHeading,
 } from "@/components/ui";
+import { ServiceHeroLoop } from "@/components/ui/service-hero-loop";
 import { getDictionary } from "@/lib/content";
 import { isLocale, locales } from "@/lib/i18n";
 import {
@@ -77,32 +79,39 @@ export default async function ServiceDetailPage({
         />
         <Container className="relative pt-16 pb-20 sm:pt-20 sm:pb-24">
           <Link
-            href={`/${locale}/services`}
+            href={`/${locale}#services`}
             className="inline-flex items-center gap-2 text-xs tracking-wide text-bone-500 transition-colors hover:text-ember-300"
           >
             <ArrowLeft className="size-3.5" />
             {labels.backToServices}
           </Link>
 
-          <div className="mt-10 max-w-3xl">
-            <span className="inline-flex size-12 items-center justify-center rounded-xl border border-ember-500/25 bg-ember-500/10 text-ember-400">
-              <Icon name={service.icon} className="size-6" />
-            </span>
-            <h1 className="mt-7 font-display text-4xl leading-[1.1] font-semibold text-balance text-bone-50 sm:text-5xl">
-              {service.name}
-            </h1>
-            <p className="mt-3 font-display text-lg text-ember-400">
-              {service.tagline}
-            </p>
-            <p className="mt-6 text-[1.05rem] leading-relaxed text-bone-300">
-              {service.intro}
-            </p>
+          {/* The loop stays after the copy in DOM order: at `lg` the grid puts
+              it on the right, below that it is hidden. No `order` juggling, and
+              the <h1> keeps its place as the first thing announced. */}
+          <div className="mt-10 grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_16rem]">
+            <div className="max-w-3xl">
+              <span className="inline-flex size-12 items-center justify-center rounded-xl border border-ember-500/25 bg-ember-500/10 text-ember-400">
+                <Icon name={service.icon} className="size-6" />
+              </span>
+              <h1 className="mt-7 font-display text-4xl leading-[1.1] font-semibold text-balance text-bone-50 sm:text-5xl">
+                {service.name}
+              </h1>
+              <p className="mt-3 font-display text-lg text-ember-400">
+                {service.tagline}
+              </p>
+              <p className="mt-6 text-[1.05rem] leading-relaxed text-bone-300">
+                {service.intro}
+              </p>
 
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href={`/${locale}/contact`} withArrow>
-                {dict.nav.cta}
-              </ButtonLink>
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+                <ButtonLink href={`/${locale}/contact`} withArrow>
+                  {dict.nav.cta}
+                </ButtonLink>
+              </div>
             </div>
+
+            <ServiceHeroLoop kind={key} />
           </div>
         </Container>
       </section>
@@ -128,6 +137,8 @@ export default async function ServiceDetailPage({
           </div>
         </Container>
       </section>
+
+      <ServiceProblems serviceKey={key} dict={dict} />
 
       <section className="border-y border-white/8 bg-ink-900/40 py-24 sm:py-28">
         <Container>

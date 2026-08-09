@@ -13,7 +13,10 @@ export function FinalCta({
   const { finalCta } = dict;
 
   return (
-    <section className="relative overflow-hidden border-t border-white/8 py-24 sm:py-32">
+    <section
+      id="contact"
+      className="relative scroll-mt-24 overflow-hidden border-t border-white/8 py-24 sm:py-32"
+    >
       <ForgeGlow />
       <Container className="relative">
         <Reveal className="mx-auto max-w-2xl text-center">

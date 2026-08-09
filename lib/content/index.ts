@@ -9,4 +9,8 @@ export function getDictionary(locale: Locale): Dictionary {
 }
 
 export type { Dictionary };
-export type { ServiceContent } from "./fr";
+export type {
+  ServiceContent,
+  ServiceProblem,
+  ServiceSceneContent,
+} from "./fr";

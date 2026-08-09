@@ -37,10 +37,10 @@ export function SiteHeader({ locale, nav }: Props) {
   const otherHref = switchLocalePath(pathname, locale, other);
 
   const links = [
-    { href: `/${locale}/services`, label: nav.services },
+    { href: `/${locale}#services`, label: nav.services },
     { href: `/${locale}#methode`, label: nav.method },
     { href: `/${locale}#chiffres`, label: nav.figures },
-    { href: `/${locale}/contact`, label: nav.contact },
+    { href: `/${locale}#contact`, label: nav.contact },
   ];
 
   return (
@@ -78,7 +78,7 @@ export function SiteHeader({ locale, nav }: Props) {
           </Link>
 
           <Link
-            href={`/${locale}/contact`}
+            href={`/${locale}#contact`}
             className="hidden rounded-full bg-linear-to-r from-ember-500 to-ember-600 px-5 py-2.5 text-sm font-medium text-ink-950 shadow-[0_10px_30px_-14px_rgba(255,122,24,0.9)] transition-all hover:from-ember-400 hover:to-ember-500 lg:inline-flex"
           >
             {nav.cta}
@@ -113,7 +113,7 @@ export function SiteHeader({ locale, nav }: Props) {
             ))}
             <div className="mt-4 flex items-center gap-3">
               <Link
-                href={`/${locale}/contact`}
+                href={`/${locale}#contact`}
                 className="flex-1 rounded-full bg-linear-to-r from-ember-500 to-ember-600 px-5 py-3 text-center text-sm font-medium text-ink-950"
               >
                 {nav.cta}

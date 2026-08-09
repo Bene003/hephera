@@ -37,6 +37,30 @@
   --animate-svc-node: svc-node 2.1s ease-out infinite both;
   --animate-svc-ring: svc-ring 2.7s ease-out infinite both;
   --animate-svc-hit: svc-hit 2.7s cubic-bezier(0.22, 1, 0.36, 1) infinite both;
+
+  /* Key figures board. No `both` here: these two return to their initial state,
+     so freezing the last frame would leave the sweep parked off-screen. */
+  --animate-kf-sweep: kf-sweep 7.2s ease-in-out infinite;
+  --animate-kf-live: kf-live 3.6s ease-out infinite;
+
+  /* Web rebuild scene. These four only exist in the "before" half of the scene,
+     so their resting state has to be invisible or neutral: the elements that
+     carry them are hidden once the page is repaired. */
+  --animate-svcweb-spin: svcweb-spin 1s linear infinite;
+  --animate-svcweb-scan: svcweb-scan 2.8s ease-in-out infinite;
+  --animate-svcweb-bounce: svcweb-bounce 2.4s ease-in infinite both;
+  --animate-svcweb-convert: svcweb-convert 2.6s ease-out infinite both;
+
+  /* Automation flow scene. Both only exist while a human is still the
+     integration, so their resting state is invisible: that is the repaired
+     poster the reduced-motion fallback lands on. */
+  --animate-svcauto-manual: svcauto-manual 1.9s ease-in-out infinite;
+  --animate-svcauto-pile: svcauto-pile 2.4s ease-in-out infinite;
+
+  /* Search results scene. Only exists while someone else holds the position,
+     so its resting state is invisible: that is the ranked poster the
+     reduced-motion fallback lands on. */
+  --animate-svcseo-click: svcseo-click 2.2s ease-in-out infinite;
 }
 
 @keyframes ember-drift {
@@ -176,6 +200,128 @@
   60%,
   100% {
     transform: scale(1);
+  }
+}
+
+@keyframes kf-sweep {
+  0% {
+    transform: translateX(-40%);
+    opacity: 0;
+  }
+  30%,
+  70% {
+    opacity: 0.55;
+  }
+  100% {
+    transform: translateX(140%);
+    opacity: 0;
+  }
+}
+
+@keyframes kf-live {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+@keyframes svcweb-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* A sweep that never resolves: the page is still loading. */
+@keyframes svcweb-scan {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  40%,
+  60% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* A visitor who gives up: rises out of the frame and shrinks away. */
+@keyframes svcweb-bounce {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-46px) scale(0.4);
+    opacity: 0;
+  }
+}
+
+/* A visitor who reads down the page and settles on the call to action. */
+@keyframes svcweb-convert {
+  0% {
+    transform: translateY(-32px) scale(0.6);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  75%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+}
+
+/* A cursor hovering a tool: someone has to come and do this. */
+@keyframes svcauto-manual {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    opacity: 0.95;
+    transform: translate(-1px, -2px) scale(1.12);
+  }
+}
+
+/* A queue that swells instead of draining. */
+@keyframes svcauto-pile {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scaleX(0.55);
+  }
+  55% {
+    opacity: 0.8;
+    transform: scaleX(1);
+  }
+}
+
+/* A click that keeps landing on the result above yours. */
+@keyframes svcseo-click {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: translate(0, 0) scale(1);
+  }
+  45% {
+    opacity: 0.95;
+    transform: translate(-1px, -2px) scale(0.86);
+  }
+  62% {
+    opacity: 0.9;
+    transform: translate(0, 0) scale(1.1);
   }
 }
 
@@ -319,7 +465,16 @@ body {
   .animate-svc-flow,
   .animate-svc-node,
   .animate-svc-ring,
-  .animate-svc-hit {
+  .animate-svc-hit,
+  .animate-kf-sweep,
+  .animate-kf-live,
+  .animate-svcweb-spin,
+  .animate-svcweb-scan,
+  .animate-svcweb-bounce,
+  .animate-svcweb-convert,
+  .animate-svcauto-manual,
+  .animate-svcauto-pile,
+  .animate-svcseo-click {
     animation: none !important;
   }
 }

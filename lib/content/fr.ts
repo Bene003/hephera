@@ -167,16 +167,46 @@ export const fr = {
     subtitle:
       "Pas de promesses vagues : voici nos engagements, en chiffres.",
     items: [
-      { value: "100 %", label: "sur mesure, jamais de gabarit recyclé" },
-      { value: "< 90 j", label: "du premier appel à la mise en ligne" },
-      { value: "1 seul", label: "interlocuteur du début à la fin" },
       {
-        value: "4",
+        prefix: "",
+        from: 0,
+        to: 100,
+        suffix: " %",
+        label: "sur mesure, jamais de gabarit recyclé",
+      },
+      {
+        prefix: "< ",
+        from: 0,
+        to: 90,
+        suffix: " jours",
+        label: "du premier appel à la mise en ligne",
+      },
+      {
+        prefix: "",
+        from: 0,
+        to: 1,
+        suffix: "",
+        label: "seul interlocuteur, du début à la fin",
+      },
+      {
+        prefix: "",
+        from: 0,
+        to: 4,
+        suffix: "",
         label: "expertises réunies : web, SEO, automatisation, conseil",
       },
-      { value: "2", label: "langues livrées d'office, français et anglais" },
       {
-        value: "0",
+        prefix: "",
+        from: 0,
+        to: 2,
+        suffix: "",
+        label: "langues livrées d'office, français et anglais",
+      },
+      {
+        prefix: "",
+        from: 9,
+        to: 0,
+        suffix: "",
         label: "frais caché : un devis fixe validé avant de commencer",
       },
     ],
@@ -199,8 +229,8 @@ export const fr = {
         a: "Oui. Nous livrons systématiquement une interface simple pour vos textes, images et pages, plus une courte session de prise en main. Vous n'êtes jamais prisonnier de votre prestataire.",
       },
       {
-        q: "Travaillez-vous avec des entreprises hors du Québec ?",
-        a: "Oui. Nous sommes basés à Montréal et travaillons à distance avec des clients francophones et anglophones, partout.",
+        q: "Travaillez-vous à distance ?",
+        a: "Oui. Nous travaillons à distance avec des clients francophones et anglophones, partout.",
       },
       {
         q: "Que se passe-t-il après la mise en ligne ?",
@@ -226,7 +256,7 @@ export const fr = {
     info: {
       emailLabel: "Courriel",
       locationLabel: "Localisation",
-      locationValue: "Montréal, Québec — à distance partout ailleurs",
+      locationValue: "À distance, partout",
       hoursLabel: "Délai de réponse",
       hoursValue: "Moins de 24 h ouvrables",
     },
@@ -234,7 +264,7 @@ export const fr = {
       name: "Nom complet",
       namePlaceholder: "Marie Tremblay",
       email: "Courriel",
-      emailPlaceholder: "marie@entreprise.ca",
+      emailPlaceholder: "marie@entreprise.com",
       company: "Entreprise (facultatif)",
       companyPlaceholder: "Nom de votre entreprise",
       subject: "Votre besoin",
@@ -282,6 +312,10 @@ export const fr = {
     faqTitle: "Questions fréquentes",
     otherServices: "Autres services",
     backToServices: "Tous les services",
+    problemsEyebrow: "Avant / après",
+    problemsTitle: "Ce que ça règle",
+    beforeLabel: "Aujourd'hui",
+    afterLabel: "Après",
   },
 
   serviceContent: {
@@ -359,6 +393,35 @@ export const fr = {
           a: "Nous pouvons rédiger les textes optimisés pour la conversion et le SEO, et coordonner la photographie. C'est une option, jamais une obligation.",
         },
       ],
+      scene: {
+        lead: "La plupart des sites que nous reprenons ne sont pas laids : ils sont lents, confus, et ils ne demandent jamais rien au visiteur. Voici ce qui change, bloc par bloc.",
+        sceneAlt:
+          "Un site se reconstruit bloc par bloc : une page lente et désordonnée devient une page rapide, lisible, construite autour d'une seule action.",
+        metricLabel: "Score de performance",
+        metricFrom: 34,
+        metricTo: 98,
+        metricSr: "Score de performance : de 34 à 98 sur 100.",
+        problems: [
+          {
+            before:
+              "Huit secondes avant le premier affichage. La plupart des visiteurs n'attendent pas.",
+            after:
+              "Le contenu s'affiche en moins d'une seconde, même sur un réseau mobile ordinaire.",
+          },
+          {
+            before:
+              "Au bout de dix secondes, on ne sait toujours pas ce que vous vendez ni à qui.",
+            after:
+              "Une promesse claire dès le premier écran, et le reste de la page qui la démontre.",
+          },
+          {
+            before:
+              "Sur téléphone, le texte déborde et les boutons sont trop petits pour être touchés.",
+            after:
+              "Une mise en page pensée pour le pouce d'abord, puis élargie au grand écran.",
+          },
+        ] satisfies ServiceProblem[],
+      },
     },
     seo: {
       icon: "search",
@@ -434,6 +497,35 @@ export const fr = {
           a: "Non, et méfiez-vous de qui la garantit. Nous garantissons une méthode, de la transparence et des rapports honnêtes sur ce qui progresse et ce qui bloque.",
         },
       ],
+      scene: {
+        lead: "Vos clients cherchent déjà ce que vous vendez. La question n'est pas de créer la demande, mais d'arrêter de la laisser à vos concurrents.",
+        sceneAlt:
+          "Une page de résultats de recherche où une entreprise remonte progressivement de la troisième page à la première position.",
+        metricLabel: "Mots-clés en première page",
+        metricFrom: 2,
+        metricTo: 47,
+        metricSr: "Mots-clés positionnés en première page : de 2 à 47.",
+        problems: [
+          {
+            before:
+              "Vous êtes en troisième page. Trois personnes sur quatre ne dépassent jamais la première.",
+            after:
+              "Vos pages de service apparaissent sur les requêtes qui déclenchent un appel.",
+          },
+          {
+            before:
+              "Sur Google Maps, un concurrent installé à trois rues de vous récupère vos clients du quartier.",
+            after:
+              "Une fiche complète, alimentée en avis, qui sort dans le trio local.",
+          },
+          {
+            before:
+              "Le jour où vous coupez la publicité, le téléphone s'arrête net.",
+            after:
+              "Une visibilité qui vous appartient et qui continue de travailler sans budget mensuel.",
+          },
+        ] satisfies ServiceProblem[],
+      },
     },
     automation: {
       icon: "bot",
@@ -510,6 +602,35 @@ export const fr = {
           a: "Oui. Nous limitons les accès au strict nécessaire, choisissons des hébergements sérieux et documentons chaque flux de données.",
         },
       ],
+      scene: {
+        lead: "Personne ne vous a embauché pour recopier des lignes d'un outil à un autre. Voici les heures qu'on vous rend, et comment.",
+        sceneAlt:
+          "Des tâches répétitives faites à la main se transforment en un flux automatisé qui relie les outils entre eux.",
+        metricLabel: "Heures récupérées par mois",
+        metricFrom: 0,
+        metricTo: 22,
+        metricSr: "Heures récupérées chaque mois : de 0 à 22.",
+        problems: [
+          {
+            before:
+              "La même information est ressaisie à la main dans trois outils différents.",
+            after:
+              "Elle est saisie une fois et se propage partout, sans faute de frappe.",
+          },
+          {
+            before:
+              "Une demande arrivée le vendredi soir attend le lundi matin pour recevoir une réponse.",
+            after:
+              "Elle est accusée, qualifiée et orientée dans la minute, à toute heure.",
+          },
+          {
+            before:
+              "Les relances et les rapports dépendent de quelqu'un qui pense à les faire.",
+            after:
+              "Ils partent tout seuls, au bon moment, et vous n'y pensez plus.",
+          },
+        ] satisfies ServiceProblem[],
+      },
     },
     consulting: {
       icon: "target",
@@ -585,6 +706,35 @@ export const fr = {
           a: "Oui. Nous jouons souvent le rôle de chef d'orchestre technique auprès d'agences, de freelances ou d'équipes internes.",
         },
       ],
+      scene: {
+        lead: "Le problème n'est presque jamais le manque d'idées. C'est de ne pas savoir laquelle attaquer en premier, ni ce qu'on accepte de ne pas faire.",
+        sceneAlt:
+          "Un mur d'idées éparpillées se trie et se réduit à une courte liste de priorités ordonnées.",
+        metricLabel: "Priorités retenues sur 40 idées",
+        metricFrom: 40,
+        metricTo: 6,
+        metricSr: "Priorités retenues : 6 chantiers sur 40 idées de départ.",
+        problems: [
+          {
+            before:
+              "Quarante idées en réunion, aucune terminée six mois plus tard.",
+            after:
+              "Six chantiers ordonnés, chiffrés, avec une date et un responsable.",
+          },
+          {
+            before:
+              "Les arbitrages se prennent à l'intuition, ou selon qui parle le plus fort.",
+            after:
+              "Ils s'appuient sur vos chiffres réels : coût d'acquisition, marge, temps passé.",
+          },
+          {
+            before:
+              "Chaque prestataire recommande exactement ce qu'il vend, et vous arbitrez seul.",
+            after:
+              "Un interlocuteur qui n'a rien à vous vendre en aval cadre le travail des autres.",
+          },
+        ] satisfies ServiceProblem[],
+      },
     },
   } satisfies Record<ServiceKey, ServiceContent>,
 
@@ -600,7 +750,7 @@ export const fr = {
       faq: "Questions fréquentes",
     },
     rights: "Tous droits réservés.",
-    location: "Montréal, Québec",
+    location: "À distance, partout",
   },
 
   notFound: {
@@ -608,6 +758,28 @@ export const fr = {
     body: "Cette page n'existe pas ou a été déplacée. Reprenons depuis le début.",
     cta: "Retour à l'accueil",
   },
+};
+
+/**
+ * Les deux champs sont obligatoires. Un champ optionnel ferait diverger la forme
+ * des éléments du tableau, ce qui inférerait une union et rendrait en.ts
+ * impossible à satisfaire.
+ */
+export type ServiceProblem = { before: string; after: string };
+
+export type ServiceSceneContent = {
+  /** Chapô sous le titre de section. */
+  lead: string;
+  /** Décrit le visuel pour les lecteurs d'écran : la scène est aria-hidden. */
+  sceneAlt: string;
+  metricLabel: string;
+  /** Entiers uniquement : le compteur passe par Math.round. */
+  metricFrom: number;
+  metricTo: number;
+  /** Phrase déjà formatée, le compteur animé étant invisible à l'assistive tech. */
+  metricSr: string;
+  /** Exactement trois, la scène et le fallback sont cadencés pour trois. */
+  problems: ServiceProblem[];
 };
 
 export type ServiceContent = {
@@ -621,6 +793,7 @@ export type ServiceContent = {
   outcomes: string[];
   process: { title: string; description: string }[];
   faq: { q: string; a: string }[];
+  scene: ServiceSceneContent;
 };
 
 export type Dictionary = typeof fr;

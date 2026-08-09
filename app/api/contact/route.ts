@@ -101,7 +101,7 @@ export async function POST(request: Request) {
 
   const html = `
     <div style="font-family:system-ui,sans-serif;line-height:1.6;color:#111">
-      <h2 style="margin:0 0 16px">Nouvelle demande — hephera.ca</h2>
+      <h2 style="margin:0 0 16px">Nouvelle demande — hephera.co</h2>
       <table style="border-collapse:collapse">
         ${rows
           .map(
