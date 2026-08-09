@@ -476,8 +476,10 @@ function MorphCard({
         className="pointer-events-none relative h-full w-full"
         style={{ transformStyle: "preserve-3d", rotateY }}
       >
+        {/* bg-ink-900 matches the back face: .card-forge alone is pure
+            translucent gradient, so the arc's neighbours showed through. */}
         <div
-          className="card-forge absolute inset-0 flex flex-col justify-end rounded-2xl p-2.5 group-hover:border-ember-500/30 md:p-4"
+          className="card-forge absolute inset-0 flex flex-col justify-end rounded-2xl bg-ink-900 p-2.5 group-hover:border-ember-500/30 md:p-4"
           style={{ backfaceVisibility: "hidden" }}
         >
           {phase.detail ? (
