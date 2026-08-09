@@ -14,6 +14,6 @@ export const localeNames: Record<Locale, string> = {
 };
 
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://hephera.co";
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://hephera.com";
 
-export const CONTACT_EMAIL = "contact@hephera.co";
+export const CONTACT_EMAIL = "contact@hephera.com";

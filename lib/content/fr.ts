@@ -51,7 +51,7 @@ export const fr = {
     eyebrow: "Références",
     title: "Des entreprises qui tournent déjà avec nos outils",
     subtitle:
-      "Santé, e-commerce, tourisme, culture, artisanat — en France, en Espagne, au Portugal, en Italie, en Grèce et aux Pays-Bas.",
+      "Santé, e-commerce, tourisme, culture, artisanat. En France, en Espagne, au Portugal, en Italie, en Grèce et aux Pays-Bas.",
     /** Sur mobile la bande défile : rien n'indique qu'un nom est cliquable. */
     hint: "Chaque nom ouvre le site livré.",
   },
@@ -224,7 +224,7 @@ export const fr = {
     items: [
       {
         q: "Combien coûte un projet ?",
-        a: "Cela dépend du périmètre : un site vitrine, une refonte complète et un système d'automatisation ne se comparent pas. Devis fixe après un premier appel gratuit — jamais de facturation à l'heure qui dérape.",
+        a: "Cela dépend du périmètre : un site vitrine, une refonte complète et un système d'automatisation ne se comparent pas. Devis fixe après un premier appel gratuit, jamais de facturation à l'heure qui dérape.",
       },
       {
         q: "Combien de temps faut-il ?",
@@ -240,7 +240,7 @@ export const fr = {
       },
       {
         q: "Que se passe-t-il après la mise en ligne ?",
-        a: "Vous choisissez : on vous remet les clés, ou vous prenez un suivi mensuel — hébergement, mises à jour, sécurité, améliorations et rapport de performance.",
+        a: "Vous choisissez : on vous remet les clés, ou vous prenez un suivi mensuel, avec hébergement, mises à jour, sécurité, améliorations et rapport de performance.",
       },
     ],
   },
@@ -249,7 +249,7 @@ export const fr = {
     eyebrow: "Prochaine étape",
     title: "Parlons de ce que vous voulez construire",
     subtitle:
-      "30 minutes, sans engagement. On regarde votre situation et on vous dit ce qui vaut la peine d'être fait — et ce qui n'en vaut pas la peine.",
+      "30 minutes, sans engagement. On regarde votre situation et on vous dit ce qui vaut la peine d'être fait, et ce qui n'en vaut pas la peine.",
     primaryCta: "Démarrer un projet",
     secondaryCta: "Écrire un courriel",
   },
@@ -295,7 +295,7 @@ export const fr = {
       submit: "Envoyer la demande",
       submitting: "Envoi en cours…",
       success:
-        "Message reçu. Nous revenons vers vous sous un jour ouvrable — merci !",
+        "Message reçu. Nous revenons vers vous sous un jour ouvrable. Merci !",
       error:
         "L'envoi a échoué. Réessayez ou écrivez-nous directement par courriel.",
       required: "Champ obligatoire",
@@ -353,7 +353,7 @@ export const fr = {
         {
           title: "Refonte de site existant",
           description:
-            "Modernisation du design, de la structure et du contenu — sans perdre votre référencement acquis.",
+            "Modernisation du design, de la structure et du contenu, sans perdre votre référencement acquis.",
         },
         {
           title: "Optimisation des performances",
@@ -442,7 +442,7 @@ export const fr = {
         "Analyse concurrentielle",
       ],
       intro:
-        "Chaque jour, des gens cherchent exactement ce que vous vendez. Le SEO consiste à faire en sorte qu'ils vous trouvent vous, plutôt que votre concurrent. C'est le canal d'acquisition le plus rentable à long terme — il ne s'arrête pas quand vous arrêtez de payer.",
+        "Chaque jour, des gens cherchent exactement ce que vous vendez. Le SEO consiste à faire en sorte qu'ils vous trouvent vous, plutôt que votre concurrent. C'est le canal d'acquisition le plus rentable à long terme : il ne s'arrête pas quand vous arrêtez de payer.",
       included: [
         {
           title: "Audit et stratégie",

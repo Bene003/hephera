@@ -51,7 +51,7 @@ export const en: Dictionary = {
     eyebrow: "Selected clients",
     title: "Businesses already running on what we built",
     subtitle:
-      "Healthcare, e-commerce, tourism, culture, craft — across France, Spain, Portugal, Italy, Greece and the Netherlands.",
+      "Healthcare, e-commerce, tourism, culture, craft. Across France, Spain, Portugal, Italy, Greece and the Netherlands.",
     hint: "Every name opens the site we shipped.",
   },
 
@@ -212,7 +212,7 @@ export const en: Dictionary = {
         from: 9,
         to: 0,
         suffix: "",
-        label: "hidden fees — a fixed quote signed off before we start",
+        label: "hidden fees: a fixed quote signed off before we start",
       },
     ],
   },
@@ -223,7 +223,7 @@ export const en: Dictionary = {
     items: [
       {
         q: "How much does a project cost?",
-        a: "It depends on scope: a marketing site, a full redesign and an automation system aren't comparable. Fixed quote after a free first call — never open-ended hourly billing.",
+        a: "It depends on scope: a marketing site, a full redesign and an automation system aren't comparable. Fixed quote after a free first call, never open-ended hourly billing.",
       },
       {
         q: "How long does it take?",
@@ -239,7 +239,7 @@ export const en: Dictionary = {
       },
       {
         q: "What happens after launch?",
-        a: "Your call: we hand over the keys, or you take a monthly plan — hosting, updates, security, improvements and a performance report.",
+        a: "Your call: we hand over the keys, or you take a monthly plan with hosting, updates, security, improvements and a performance report.",
       },
     ],
   },
@@ -248,7 +248,7 @@ export const en: Dictionary = {
     eyebrow: "Next step",
     title: "Let's talk about what you want to build",
     subtitle:
-      "30 minutes, no strings attached. We look at your situation and tell you what's worth building — and what isn't.",
+      "30 minutes, no strings attached. We look at your situation and tell you what's worth building, and what isn't.",
     primaryCta: "Start a project",
     secondaryCta: "Send an email",
   },
@@ -335,7 +335,7 @@ export const en: Dictionary = {
         "Performance optimization",
       ],
       intro:
-        "A good website isn't an online catalogue — it's your best salesperson, working around the clock. We build fast, clear, action-oriented sites on modern foundations you'll keep for years.",
+        "A good website isn't an online catalogue. It's your best salesperson, working around the clock. We build fast, clear, action-oriented sites on modern foundations you'll keep for years.",
       included: [
         {
           title: "Marketing website",
@@ -345,12 +345,12 @@ export const en: Dictionary = {
         {
           title: "Custom platform",
           description:
-            "Client portals, bookings, catalogues, dashboards — we build the functionality your business actually needs.",
+            "Client portals, bookings, catalogues, dashboards: we build the functionality your business actually needs.",
         },
         {
           title: "Website redesign",
           description:
-            "Modernized design, structure and content — without losing the search rankings you've earned.",
+            "Modernized design, structure and content, without losing the search rankings you've earned.",
         },
         {
           title: "Performance optimization",
@@ -394,7 +394,7 @@ export const en: Dictionary = {
         },
       ],
       scene: {
-        lead: "Most of the sites we take over aren't ugly — they're slow, unclear, and they never actually ask the visitor for anything. Here's what changes, block by block.",
+        lead: "Most of the sites we take over aren't ugly. They're slow, unclear, and they never actually ask the visitor for anything. Here's what changes, block by block.",
         sceneAlt:
           "A website rebuilds itself block by block: a slow, disordered page becomes a fast, readable page built around a single action.",
         metricLabel: "Performance score",
@@ -436,7 +436,7 @@ export const en: Dictionary = {
         "Competitor analysis",
       ],
       intro:
-        "Every day, people search for exactly what you sell. SEO is about making sure they find you instead of your competitor. It's the most profitable long-term channel there is — it doesn't stop the moment you stop paying.",
+        "Every day, people search for exactly what you sell. SEO is about making sure they find you instead of your competitor. It's the most profitable long-term channel there is: it doesn't stop the moment you stop paying.",
       included: [
         {
           title: "Audit and strategy",
@@ -446,7 +446,7 @@ export const en: Dictionary = {
         {
           title: "Local SEO",
           description:
-            "Neighbourhood and city pages, local citations, reviews — own your service area.",
+            "Neighbourhood and city pages, local citations, reviews: own your service area.",
         },
         {
           title: "Google Business Profile",
@@ -492,11 +492,11 @@ export const en: Dictionary = {
         },
         {
           q: "Do you guarantee first position?",
-          a: "No — and be wary of anyone who does. We guarantee a method, transparency and honest reporting on what's moving and what isn't.",
+          a: "No, and be wary of anyone who does. We guarantee a method, transparency and honest reporting on what's moving and what isn't.",
         },
       ],
       scene: {
-        lead: "Your customers are already searching for what you sell. The job isn't to create demand — it's to stop handing it to your competitors.",
+        lead: "Your customers are already searching for what you sell. The job isn't to create demand. It's to stop handing it to your competitors.",
         sceneAlt:
           "A search results page where a business climbs steadily from the third page to the top position.",
         metricLabel: "Keywords on page one",
@@ -544,7 +544,7 @@ export const en: Dictionary = {
         {
           title: "Task automation",
           description:
-            "Follow-ups, invoicing, data transfers, recurring reports — running quietly on their own.",
+            "Follow-ups, invoicing, data transfers, recurring reports, running quietly on their own.",
         },
         {
           title: "AI agents",
@@ -641,12 +641,12 @@ export const en: Dictionary = {
         "SMB support",
       ],
       intro:
-        "The expensive mistake isn't building badly — it's building the wrong thing. Before any code, we help you see clearly what's really holding back your growth and which order to tackle it in.",
+        "The expensive mistake isn't building badly. It's building the wrong thing. Before any code, we help you see clearly what's really holding back your growth and which order to tackle it in.",
       included: [
         {
           title: "Digital audit",
           description:
-            "A full picture: site, visibility, tools, processes, customer experience — with an action plan ranked by impact.",
+            "A full picture of your site, visibility, tools, processes and customer experience, with an action plan ranked by impact.",
         },
         {
           title: "Digital strategy",

@@ -24,7 +24,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
     name: "Hephera",
     description: dict.meta.description,
     url: `${SITE_URL}/${locale}`,
-    email: "contact@hephera.co",
+    email: "contact@hephera.com",
     knowsLanguage: ["fr", "en"],
     serviceType: Object.values(dict.serviceContent).map(
       (service) => service.name,
