@@ -25,6 +25,9 @@
 
   --animate-ember-drift: ember-drift 14s ease-in-out infinite;
   --animate-marquee: marquee 40s linear infinite;
+  /* Same keyframe, longer cycle: the client band carries wider type than the
+     hero ticker, and at 40s the names would go past faster than they read. */
+  --animate-marquee-slow: marquee 70s linear infinite;
 
   /* Service card back faces. Each loop is authored so its un-animated resting
      state is the intended static poster, which is what the reduced-motion
@@ -459,6 +462,7 @@ body {
   }
   .animate-ember-drift,
   .animate-marquee,
+  .animate-marquee-slow,
   .animate-svc-build,
   .animate-svc-type,
   .animate-svc-rank,

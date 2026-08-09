@@ -4,7 +4,7 @@ export const fr = {
   meta: {
     title: "Hephera — Studio numérique | Sites web, SEO et automatisation",
     description:
-      "Hephera est un studio numérique qui conçoit des sites web, du SEO et des automatisations pour aider les entreprises à croître, gagner du temps et moderniser leur activité.",
+      "Studio numérique : sites web, référencement et automatisation. Des outils qui font venir des clients et rendent des heures à votre équipe.",
     ogAlt: "Hephera — studio numérique",
   },
 
@@ -21,11 +21,11 @@ export const fr = {
 
   hero: {
     eyebrow: "Studio numérique",
-    titleStart: "Nous concevons les",
+    titleStart: "Nous construisons les",
     titleAccent: "outils numériques",
-    titleEnd: "de votre croissance.",
+    titleEnd: "qui font grandir votre entreprise.",
     primaryCta: "Démarrer un projet",
-    secondaryCta: "Découvrir nos services",
+    secondaryCta: "Voir les services",
     marquee: [
       "Sites vitrines",
       "Sites sur mesure",
@@ -43,16 +43,25 @@ export const fr = {
   },
 
   manifesto: {
-    lineOne: "Nous ne créons pas seulement des sites web.",
-    lineTwo: "Nous construisons des outils de croissance.",
+    lineOne: "Nous ne livrons pas des sites web.",
+    lineTwo: "Nous livrons des outils qui travaillent.",
+  },
+
+  clients: {
+    eyebrow: "Références",
+    title: "Des entreprises qui tournent déjà avec nos outils",
+    subtitle:
+      "Santé, e-commerce, tourisme, culture, artisanat — en France, en Espagne, au Portugal, en Italie, en Grèce et aux Pays-Bas.",
+    /** Sur mobile la bande défile : rien n'indique qu'un nom est cliquable. */
+    hint: "Chaque nom ouvre le site livré.",
   },
 
   services: {
     eyebrow: "Nos services",
     title: "Quatre leviers, un même objectif",
     subtitle:
-      "Chaque levier fonctionne seul. Ensemble, ils transforment la façon dont votre entreprise attire, sert et garde ses clients.",
-    cta: "En savoir plus",
+      "Chacun fonctionne seul. Ensemble, ils font venir les clients, les convertissent et vous rendent vos heures.",
+    cta: "Voir le détail",
     allCta: "Voir tous les services",
     scrollHint: "Défilez pour explorer",
     clickHint: "Cliquez sur les cartes",
@@ -62,7 +71,7 @@ export const fr = {
     eyebrow: "Notre méthode",
     title: "Tout commence par comprendre",
     subtitle:
-      "Un processus court, transparent, sans jargon. Vous savez à tout moment où en est votre projet.",
+      "Quatre étapes, sans jargon. Vous savez toujours où en est votre projet.",
     stepLabel: "Étape",
     stepOf: "sur",
     prev: "Étape précédente",
@@ -73,56 +82,56 @@ export const fr = {
         icon: "search",
         title: "Comprendre",
         description:
-          "On analyse votre activité, vos clients, votre concurrence et ce qui vous fait perdre du temps. On définit un objectif chiffré.",
+          "On étudie votre activité, vos clients, vos concurrents et ce qui vous coûte du temps. On en sort un objectif chiffré.",
       },
       {
         n: "02",
         icon: "brain",
         title: "Concevoir",
         description:
-          "Architecture, parcours utilisateur, maquettes et plan technique. Vous validez avant qu'une seule ligne de code soit écrite.",
+          "Architecture, parcours, maquettes, plan technique. Vous validez avant la première ligne de code.",
       },
       {
         n: "03",
         icon: "hammer",
         title: "Construire",
         description:
-          "Développement, contenus, intégrations et automatisations. Livraison par étapes, avec des points réguliers.",
+          "Développement, contenus, intégrations, automatisations. Livré par étapes, avec des points réguliers.",
       },
       {
         n: "04",
         icon: "trending",
         title: "Faire évoluer",
         description:
-          "Mesure des résultats, ajustements, nouvelles fonctionnalités. Vos outils grandissent avec votre entreprise.",
+          "On mesure, on ajuste, on ajoute. Vos outils grandissent avec votre entreprise.",
       },
     ],
   },
 
   philosophy: {
     eyebrow: "Notre philosophie",
-    title: "Chaque entreprise possède un potentiel inexploité",
-    body: "Notre rôle est de construire les outils qui lui permettront de le révéler.",
+    title: "Chaque entreprise a un potentiel inexploité",
+    body: "Notre rôle : construire les outils qui le libèrent.",
     principles: [
       {
         title: "La qualité plutôt que la quantité",
         description:
-          "Peu de projets à la fois, menés en profondeur, plutôt qu'une chaîne de livrables interchangeables.",
+          "Peu de projets à la fois, menés à fond. Jamais de chaîne de montage.",
       },
       {
         title: "Le durable plutôt que le temporaire",
         description:
-          "Des bases techniques propres, documentées et maintenables, qui tiennent des années.",
+          "Des bases propres, documentées, maintenables. Elles tiennent des années.",
       },
       {
         title: "Une technologie simple à utiliser",
         description:
-          "Vos équipes doivent pouvoir s'en servir sans formation de trois jours. Sinon, l'outil est raté.",
+          "S'il faut trois jours de formation pour s'en servir, l'outil est raté.",
       },
       {
         title: "Des résultats mesurables",
         description:
-          "Trafic, demandes, heures gagnées, taux de conversion. Ce qui ne se mesure pas ne s'améliore pas.",
+          "Trafic, demandes, heures gagnées, conversion. Ce qui ne se mesure pas ne s'améliore pas.",
       },
     ],
   },
@@ -139,24 +148,22 @@ export const fr = {
       {
         icon: "brain",
         title: "Innover",
-        description:
-          "Toujours chercher une meilleure manière de résoudre un problème.",
+        description: "Chercher une meilleure façon de faire, à chaque projet.",
       },
       {
         icon: "handshake",
         title: "Confiance",
-        description: "Construire des relations à long terme.",
+        description: "Des relations qui durent plus longtemps que le projet.",
       },
       {
         icon: "trending",
         title: "Impact",
-        description: "Chaque solution doit générer une valeur réelle.",
+        description: "Une solution qui ne rapporte rien n'a pas lieu d'être.",
       },
       {
         icon: "rocket",
         title: "Évolution",
-        description:
-          "Les entreprises évoluent, leurs outils doivent évoluer avec elles.",
+        description: "Vos outils grandissent au rythme de votre entreprise.",
       },
     ],
   },
@@ -164,8 +171,7 @@ export const fr = {
   keyFigures: {
     eyebrow: "Chiffres clés",
     title: "Ce sur quoi vous pouvez compter",
-    subtitle:
-      "Pas de promesses vagues : voici nos engagements, en chiffres.",
+    subtitle: "Pas de promesses vagues. Des engagements, en chiffres.",
     items: [
       {
         prefix: "",
@@ -193,14 +199,14 @@ export const fr = {
         from: 0,
         to: 4,
         suffix: "",
-        label: "expertises réunies : web, SEO, automatisation, conseil",
+        label: "expertises sous le même toit : web, SEO, automatisation, conseil",
       },
       {
         prefix: "",
         from: 0,
         to: 2,
         suffix: "",
-        label: "langues livrées d'office, français et anglais",
+        label: "langues livrées d'office : français et anglais",
       },
       {
         prefix: "",
@@ -218,23 +224,23 @@ export const fr = {
     items: [
       {
         q: "Combien coûte un projet ?",
-        a: "Cela dépend de l'ampleur. Un site vitrine soigné, une refonte complète ou un système d'automatisation n'ont pas le même périmètre. Nous établissons un devis fixe après un premier appel de découverte gratuit — pas de facturation à l'heure qui dérape.",
+        a: "Cela dépend du périmètre : un site vitrine, une refonte complète et un système d'automatisation ne se comparent pas. Devis fixe après un premier appel gratuit — jamais de facturation à l'heure qui dérape.",
       },
       {
         q: "Combien de temps faut-il ?",
-        a: "Un site vitrine se livre généralement en 3 à 5 semaines. Un projet sur mesure ou une refonte avec SEO se compte plutôt en 8 à 12 semaines. Nous fixons les échéances au début du projet et nous nous y tenons.",
+        a: "Un site vitrine : 3 à 5 semaines. Une refonte avec SEO ou un projet sur mesure : 8 à 12 semaines. Les échéances sont fixées au départ, et tenues.",
       },
       {
         q: "Est-ce que je pourrai modifier mon site moi-même ?",
-        a: "Oui. Nous livrons systématiquement une interface simple pour vos textes, images et pages, plus une courte session de prise en main. Vous n'êtes jamais prisonnier de votre prestataire.",
+        a: "Oui. Chaque projet est livré avec une interface simple pour vos textes, vos images et vos pages, plus une session de prise en main. Vous n'êtes jamais prisonnier de votre prestataire.",
       },
       {
         q: "Travaillez-vous à distance ?",
-        a: "Oui. Nous travaillons à distance avec des clients francophones et anglophones, partout.",
+        a: "Oui, partout, en français comme en anglais.",
       },
       {
         q: "Que se passe-t-il après la mise en ligne ?",
-        a: "Vous choisissez : nous remettre les clés complètes, ou souscrire un suivi mensuel (hébergement, mises à jour, sécurité, améliorations continues et rapport de performance).",
+        a: "Vous choisissez : on vous remet les clés, ou vous prenez un suivi mensuel — hébergement, mises à jour, sécurité, améliorations et rapport de performance.",
       },
     ],
   },
@@ -243,7 +249,7 @@ export const fr = {
     eyebrow: "Prochaine étape",
     title: "Parlons de ce que vous voulez construire",
     subtitle:
-      "Un appel de 30 minutes, sans engagement. On regarde votre situation, on vous dit franchement ce qui vaut la peine d'être fait — et ce qui n'en vaut pas la peine.",
+      "30 minutes, sans engagement. On regarde votre situation et on vous dit ce qui vaut la peine d'être fait — et ce qui n'en vaut pas la peine.",
     primaryCta: "Démarrer un projet",
     secondaryCta: "Écrire un courriel",
   },
@@ -324,7 +330,7 @@ export const fr = {
       name: "Développement Web",
       tagline: "Des sites qui travaillent pour vous",
       short:
-        "Sites vitrines, plateformes sur mesure et refontes rapides, pensés pour convertir et durer.",
+        "Un site rapide, clair, qui demande quelque chose au visiteur. Vitrine, plateforme sur mesure ou refonte.",
       bullets: [
         "Sites vitrines",
         "Sites sur mesure",
@@ -428,7 +434,7 @@ export const fr = {
       name: "SEO",
       tagline: "Être trouvé par ceux qui vous cherchent",
       short:
-        "Référencement Google, SEO local et Google Business Profile pour capter une demande déjà existante.",
+        "Remonter sur les recherches qui comptent : référencement Google, SEO local, Google Business Profile.",
       bullets: [
         "Référencement Google",
         "SEO local",
@@ -532,7 +538,7 @@ export const fr = {
       name: "Automatisation",
       tagline: "Rendez à votre équipe ses heures perdues",
       short:
-        "Automatisation des tâches répétitives, agents IA, chatbots et intégration de vos outils métiers.",
+        "Les tâches répétitives passent en pilote automatique : agents IA, chatbots, vos outils enfin reliés.",
       bullets: [
         "Automatisation des tâches répétitives",
         "Agents IA",
@@ -637,7 +643,7 @@ export const fr = {
       name: "Conseil",
       tagline: "Savoir quoi construire, et dans quel ordre",
       short:
-        "Audit numérique, stratégie digitale, optimisation de la conversion et accompagnement des PME.",
+        "Audit, priorités, plan chiffré. On tranche avant que vous ne dépensiez.",
       bullets: [
         "Audit numérique",
         "Stratégie digitale",
@@ -739,7 +745,8 @@ export const fr = {
   } satisfies Record<ServiceKey, ServiceContent>,
 
   footer: {
-    tagline: "Nous concevons les outils numériques de votre croissance.",
+    tagline:
+      "Nous construisons les outils numériques qui font grandir votre entreprise.",
     servicesTitle: "Services",
     studioTitle: "Studio",
     contactTitle: "Contact",

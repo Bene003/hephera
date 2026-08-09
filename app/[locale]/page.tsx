@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { Hero } from "@/components/sections/hero";
 import { Manifesto } from "@/components/sections/manifesto";
+import { Clients } from "@/components/sections/clients";
 import { ServicesStack } from "@/components/sections/services-stack";
 import { Method } from "@/components/sections/method";
 import { Philosophy } from "@/components/sections/philosophy";
@@ -40,6 +41,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       <Manifesto dict={dict} />
       <ServicesStack locale={locale} dict={dict} id="services" />
       <Method dict={dict} />
+      <Clients dict={dict} />
       <Philosophy dict={dict} />
       <KeyFigures dict={dict} />
       <Values dict={dict} />

@@ -4,7 +4,7 @@ export const en: Dictionary = {
   meta: {
     title: "Hephera — Digital studio | Websites, SEO and automation",
     description:
-      "Hephera is a digital studio designing websites, SEO and automation systems that help businesses grow, save time and modernize the way they work.",
+      "Digital studio: websites, SEO and automation. Tools that bring customers in and give your team its hours back.",
     ogAlt: "Hephera — digital studio",
   },
 
@@ -21,11 +21,11 @@ export const en: Dictionary = {
 
   hero: {
     eyebrow: "Digital studio",
-    titleStart: "We design the",
+    titleStart: "We build the",
     titleAccent: "digital tools",
-    titleEnd: "your growth runs on.",
+    titleEnd: "that grow your business.",
     primaryCta: "Start a project",
-    secondaryCta: "Explore our services",
+    secondaryCta: "See the services",
     marquee: [
       "Marketing websites",
       "Custom platforms",
@@ -43,16 +43,24 @@ export const en: Dictionary = {
   },
 
   manifesto: {
-    lineOne: "We don't just build websites.",
-    lineTwo: "We build growth tools.",
+    lineOne: "We don't ship websites.",
+    lineTwo: "We ship tools that work.",
+  },
+
+  clients: {
+    eyebrow: "Selected clients",
+    title: "Businesses already running on what we built",
+    subtitle:
+      "Healthcare, e-commerce, tourism, culture, craft — across France, Spain, Portugal, Italy, Greece and the Netherlands.",
+    hint: "Every name opens the site we shipped.",
   },
 
   services: {
     eyebrow: "Our services",
     title: "Four levers, one goal",
     subtitle:
-      "Each one works on its own. Together, they change how your business attracts, serves and keeps its customers.",
-    cta: "Learn more",
+      "Each one works on its own. Together, they bring customers in, turn them into enquiries and give you your hours back.",
+    cta: "See the detail",
     allCta: "See all services",
     scrollHint: "Scroll to explore",
     clickHint: "Click the cards",
@@ -62,7 +70,7 @@ export const en: Dictionary = {
     eyebrow: "Our method",
     title: "It all starts with understanding",
     subtitle:
-      "A short, transparent process with no jargon. You always know exactly where your project stands.",
+      "Four steps, no jargon. You always know where your project stands.",
     stepLabel: "Step",
     stepOf: "of",
     prev: "Previous step",
@@ -73,56 +81,56 @@ export const en: Dictionary = {
         icon: "search",
         title: "Understand",
         description:
-          "We dig into your business, your customers, your competitors and what's eating your time. We set a measurable goal.",
+          "We study your business, your customers, your competitors and what's eating your time. Out of it comes one measurable goal.",
       },
       {
         n: "02",
         icon: "brain",
         title: "Design",
         description:
-          "Architecture, user journeys, mockups and technical plan. You approve everything before a single line of code is written.",
+          "Architecture, user journeys, mockups, technical plan. You sign off before the first line of code.",
       },
       {
         n: "03",
         icon: "hammer",
         title: "Build",
         description:
-          "Development, content, integrations and automation. Delivered in stages, with regular checkpoints.",
+          "Development, content, integrations, automation. Shipped in stages, with regular checkpoints.",
       },
       {
         n: "04",
         icon: "trending",
         title: "Evolve",
         description:
-          "We measure results, adjust and add what's missing. Your tools grow alongside your business.",
+          "We measure, we adjust, we add. Your tools grow alongside your business.",
       },
     ],
   },
 
   philosophy: {
     eyebrow: "Our philosophy",
-    title: "Every business holds untapped potential",
-    body: "Our job is to build the tools that let it come out.",
+    title: "Every business has untapped potential",
+    body: "Our job: build the tools that let it out.",
     principles: [
       {
         title: "Quality over quantity",
         description:
-          "A handful of projects at a time, done properly, instead of a conveyor belt of interchangeable deliverables.",
+          "A handful of projects at a time, done properly. Never a conveyor belt.",
       },
       {
         title: "Durable over temporary",
         description:
-          "Clean, documented, maintainable foundations that still hold up years from now.",
+          "Clean, documented, maintainable foundations. They hold up for years.",
       },
       {
         title: "Technology that stays simple",
         description:
-          "Your team should be able to use it without a three-day training. Otherwise the tool has failed.",
+          "If it takes a three-day training to use, the tool has failed.",
       },
       {
         title: "Measurable results",
         description:
-          "Traffic, enquiries, hours saved, conversion rate. What isn't measured never improves.",
+          "Traffic, enquiries, hours saved, conversion. What isn't measured never improves.",
       },
     ],
   },
@@ -139,22 +147,22 @@ export const en: Dictionary = {
       {
         icon: "brain",
         title: "Innovate",
-        description: "Always look for a better way to solve the problem.",
+        description: "Look for a better way to do it, on every project.",
       },
       {
         icon: "handshake",
         title: "Trust",
-        description: "Build long-term relationships.",
+        description: "Relationships that outlast the project.",
       },
       {
         icon: "trending",
         title: "Impact",
-        description: "Every solution must create real value.",
+        description: "A solution that returns nothing has no reason to exist.",
       },
       {
         icon: "rocket",
         title: "Evolution",
-        description: "Businesses evolve — their tools should evolve with them.",
+        description: "Your tools grow at the pace of your business.",
       },
     ],
   },
@@ -162,7 +170,7 @@ export const en: Dictionary = {
   keyFigures: {
     eyebrow: "Key figures",
     title: "What you can count on",
-    subtitle: "No vague promises — here are our commitments, in numbers.",
+    subtitle: "No vague promises. Commitments, in numbers.",
     items: [
       {
         prefix: "",
@@ -197,7 +205,7 @@ export const en: Dictionary = {
         from: 0,
         to: 2,
         suffix: "",
-        label: "languages shipped by default, French and English",
+        label: "languages shipped by default: French and English",
       },
       {
         prefix: "",
@@ -215,23 +223,23 @@ export const en: Dictionary = {
     items: [
       {
         q: "How much does a project cost?",
-        a: "It depends on scope. A polished marketing site, a full redesign and an automation system are very different projects. We give a fixed quote after a free discovery call — no open-ended hourly billing.",
+        a: "It depends on scope: a marketing site, a full redesign and an automation system aren't comparable. Fixed quote after a free first call — never open-ended hourly billing.",
       },
       {
         q: "How long does it take?",
-        a: "A marketing site usually ships in 3 to 5 weeks. A custom build or a redesign with SEO is closer to 8 to 12 weeks. We set the deadlines up front and stick to them.",
+        a: "A marketing site: 3 to 5 weeks. A redesign with SEO or a custom build: 8 to 12 weeks. Deadlines are set up front, and kept.",
       },
       {
         q: "Will I be able to edit the site myself?",
-        a: "Yes. Every project ships with a simple interface for your text, images and pages, plus a short handover session. You're never locked in with your provider.",
+        a: "Yes. Every project ships with a simple interface for your text, images and pages, plus a handover session. You're never locked in with your provider.",
       },
       {
         q: "Do you work remotely?",
-        a: "Yes. We work remotely with French- and English-speaking clients anywhere.",
+        a: "Yes, anywhere, in French as well as English.",
       },
       {
         q: "What happens after launch?",
-        a: "Your call: we hand over the keys entirely, or you take a monthly plan (hosting, updates, security, continuous improvements and a performance report).",
+        a: "Your call: we hand over the keys, or you take a monthly plan — hosting, updates, security, improvements and a performance report.",
       },
     ],
   },
@@ -240,7 +248,7 @@ export const en: Dictionary = {
     eyebrow: "Next step",
     title: "Let's talk about what you want to build",
     subtitle:
-      "A 30-minute call, no strings attached. We look at your situation and tell you honestly what's worth building — and what isn't.",
+      "30 minutes, no strings attached. We look at your situation and tell you what's worth building — and what isn't.",
     primaryCta: "Start a project",
     secondaryCta: "Send an email",
   },
@@ -319,7 +327,7 @@ export const en: Dictionary = {
       name: "Web Development",
       tagline: "Websites that actually work for you",
       short:
-        "Marketing sites, custom platforms and fast redesigns, built to convert and to last.",
+        "A site that's fast, clear, and actually asks the visitor for something. Marketing site, custom platform or redesign.",
       bullets: [
         "Marketing websites",
         "Custom-built platforms",
@@ -420,7 +428,7 @@ export const en: Dictionary = {
       name: "SEO",
       tagline: "Get found by the people already looking",
       short:
-        "Google rankings, local SEO and Google Business Profile work to capture demand that already exists.",
+        "Climbing the searches that matter: Google rankings, local SEO, Google Business Profile.",
       bullets: [
         "Google rankings",
         "Local SEO",
@@ -522,7 +530,7 @@ export const en: Dictionary = {
       name: "Automation",
       tagline: "Give your team its lost hours back",
       short:
-        "Repetitive task automation, AI agents, chatbots and integration of the tools you already use.",
+        "Repetitive work goes on autopilot: AI agents, chatbots, and the tools you already use finally talking to each other.",
       bullets: [
         "Repetitive task automation",
         "AI agents",
@@ -625,7 +633,7 @@ export const en: Dictionary = {
       name: "Consulting",
       tagline: "Know what to build, and in what order",
       short:
-        "Digital audits, digital strategy, conversion optimization and ongoing support for growing businesses.",
+        "Audit, priorities, costed plan. We decide before you spend.",
       bullets: [
         "Digital audit",
         "Digital strategy",
@@ -725,7 +733,7 @@ export const en: Dictionary = {
   },
 
   footer: {
-    tagline: "We design the digital tools your growth runs on.",
+    tagline: "We build the digital tools that grow your business.",
     servicesTitle: "Services",
     studioTitle: "Studio",
     contactTitle: "Contact",
