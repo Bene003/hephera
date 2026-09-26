@@ -3,6 +3,7 @@
 import { useEffect, useRef, type CSSProperties } from "react";
 import Image from "next/image";
 import donneesEcran from "@/lib/hero-robot-ecran.json";
+import boucle from "@/lib/hero-robot-boucle.json";
 import {
   DUREE_TOTALE,
   TEXTURE,
@@ -26,6 +27,14 @@ const VIDEO_URL = "/videos/hero-robot-intra.mp4";
    4 MB video. The video, once loaded, starts on this exact frame and replaces
    it without a visible change. */
 const POSTER_URL = "/videos/hero-robot-debut.jpg";
+
+/* Touch screens have no mouse to turn the head, so the robot looks around on
+   its own: an 11 s loop cut from the same frames (pause, front, far side,
+   front, back), starting and ending on the first frame so it takes over from
+   the image without a jump. lib/hero-robot-boucle.json maps each of its
+   frames to the clip frame it shows, for the screen overlay. 1.2 MB, a
+   regular encode: it plays, it is never scrubbed. */
+const BOUCLE_URL = "/videos/hero-robot-boucle.mp4";
 
 /* A full sweep across the screen moves through 80 % of the clip. */
 const SENSITIVITY = 0.8;
@@ -122,8 +131,9 @@ const ORBITES: Orbite[] = [
  * The robot video, scrubbed by the mouse, with technology logos orbiting its
  * head.
  *
- * The video never plays on its own: horizontal mouse movement scrubs it
- * forward and back. Only the movement counts, not the position. One seek at a
+ * With a mouse, the video never plays on its own: horizontal mouse movement
+ * scrubs it forward and back. On a touch screen, a loop plays instead, the
+ * robot looking around by itself. Only the movement counts, not the position. One seek at a
  * time: a target set while the decoder is still seeking is picked up by
  * `seeked`, instead of flooding it with seeks it can't keep up with.
  *
@@ -142,6 +152,10 @@ export function HeroScene() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const cadreRef = useRef<HTMLDivElement>(null);
   const ecranRef = useRef<HTMLCanvasElement>(null);
+  /* While the loop plays, the time of the frame actually on screen, from
+     requestVideoFrameCallback: currentTime runs slightly ahead of the picture,
+     and the screen overlay would lag the head by a frame. -1: not known. */
+  const tempsAfficheRef = useRef(-1);
 
   /* The word on the robot's screen. The canvas is drawn flat, then warped
      onto the screen of the frame on display, every animation frame: the head
@@ -162,13 +176,21 @@ export function HeroScene() {
     let raf = 0;
     let minuteur = 0;
 
-    const imageAffichee = () =>
-      images[
-        Math.min(
-          images.length - 1,
-          Math.max(0, Math.round(video.currentTime * donneesEcran.fps)),
-        )
-      ];
+    /* Scrubbed, the video is the clip itself: its time gives the frame. The
+       loop is a reordering of the clip: its frame gives, through the map,
+       the clip frame on screen. */
+    const imageAffichee = () => {
+      const enBoucle = video.dataset.mode === "boucle";
+      const temps =
+        enBoucle && tempsAfficheRef.current >= 0
+          ? tempsAfficheRef.current
+          : video.currentTime;
+      const rang = Math.round(temps * donneesEcran.fps);
+      const index = enBoucle
+        ? (boucle.sequence[Math.min(boucle.sequence.length - 1, rang)] ?? 0)
+        : rang;
+      return images[Math.min(images.length - 1, Math.max(0, index))];
+    };
 
     const terminer = () => {
       ecran.style.opacity = "0";
@@ -239,8 +261,13 @@ export function HeroScene() {
       video.currentTime = targetTime;
     };
 
+    /* The loop fires `seeked` each time it wraps around, and a tap fires a
+       `mousemove`: neither may send it back to its start. */
+    const enBoucle = () => video.dataset.mode === "boucle";
+
     const onSeeked = () => {
       seeking = false;
+      if (enBoucle()) return;
       if (Math.abs(video.currentTime - targetTime) >= 0.001) seek();
     };
 
@@ -258,6 +285,7 @@ export function HeroScene() {
     };
 
     const onMove = (event: MouseEvent) => {
+      if (enBoucle()) return;
       if (previousX === null) {
         previousX = event.clientX;
         return;
@@ -281,18 +309,56 @@ export function HeroScene() {
     video.addEventListener("loadedmetadata", onMetadata);
     window.addEventListener("mousemove", onMove, { passive: true });
 
-    /* THE VIDEO ONLY LOADS WHERE IT CAN MOVE, AND ONLY ONCE THE PAGE IS UP.
-       Only a mouse scrubs it: on a touch screen the first frame, already on
-       screen as an image, is all anyone would ever see, so the 4 MB are never
-       downloaded. With a mouse, it waits for the page to finish loading and
-       for the browser to be idle, so it never competes with what the visitor
-       needs first. */
+    /* THE VIDEO ONLY LOADS ONCE THE PAGE IS UP. It waits for the page to
+       finish loading and for the browser to be idle, so it never competes
+       with what the visitor needs first. With a mouse, the 4 MB clip, to be
+       scrubbed. On a touch screen, the 1.2 MB loop, played on its own; not at
+       all with reduced motion or data saving, where the first frame, already
+       on screen as an image, stays. */
+    const souris = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const economie =
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      (navigator as Navigator & { connection?: { saveData?: boolean } }).connection
+        ?.saveData === true;
+
     let annule = false;
     let attente = 0;
+    let heroVisible = true;
+    let rappel = 0;
+
+    /* Only plays while the hero is on screen and the tab in front. A refused
+       play() (iOS low power mode) leaves the first frame: nothing breaks. */
+    const jouer = () => {
+      if (video.dataset.mode !== "boucle" || video.readyState < 2) return;
+      if (heroVisible && !document.hidden) video.play().catch(() => {});
+      else video.pause();
+    };
+    const suivreImage = () => {
+      if (typeof video.requestVideoFrameCallback !== "function") return;
+      rappel = video.requestVideoFrameCallback((_, meta) => {
+        tempsAfficheRef.current = meta.mediaTime;
+        suivreImage();
+      });
+    };
+    const vigie = new IntersectionObserver(([entree]) => {
+      heroVisible = entree?.isIntersecting ?? true;
+      jouer();
+    });
+
     const charger = () => {
       if (annule || video.src) return;
       video.preload = "auto";
-      video.src = VIDEO_URL;
+      if (souris) {
+        video.src = VIDEO_URL;
+        return;
+      }
+      video.dataset.mode = "boucle";
+      video.loop = true;
+      video.addEventListener("canplay", jouer, { once: true });
+      suivreImage();
+      vigie.observe(video);
+      document.addEventListener("visibilitychange", jouer);
+      video.src = BOUCLE_URL;
     };
     /* Safari has no requestIdleCallback: a short delay after load stands in. */
     const idle = typeof window.requestIdleCallback === "function";
@@ -301,14 +367,18 @@ export function HeroScene() {
         ? window.requestIdleCallback(charger, { timeout: 2000 })
         : window.setTimeout(charger, 500);
     };
-    const souris = window.matchMedia("(hover: hover) and (pointer: fine)");
-    if (souris.matches) {
+    if (souris || !economie) {
       if (document.readyState === "complete") quandInactif();
       else window.addEventListener("load", quandInactif, { once: true });
     }
 
     return () => {
       annule = true;
+      vigie.disconnect();
+      document.removeEventListener("visibilitychange", jouer);
+      video.removeEventListener("canplay", jouer);
+      if (rappel) video.cancelVideoFrameCallback(rappel);
+      video.pause();
       if (idle) window.cancelIdleCallback(attente);
       else window.clearTimeout(attente);
       window.removeEventListener("load", quandInactif);
