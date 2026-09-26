@@ -326,12 +326,18 @@ export function HeroScene() {
     let heroVisible = true;
     let rappel = 0;
 
-    /* Only plays while the hero is on screen and the tab in front. A refused
-       play() (iOS low power mode) leaves the first frame: nothing breaks. */
+    /* Only plays while the hero is on screen and the tab in front. No waiting
+       for the video to be ready: iOS Safari buffers nothing until play() is
+       called, so waiting for `canplay` would wait forever. A refused play()
+       (iOS low power mode) leaves the first frame, and the next tap on the
+       page, which lets it play, tries again. */
     const jouer = () => {
-      if (video.dataset.mode !== "boucle" || video.readyState < 2) return;
+      if (video.dataset.mode !== "boucle") return;
       if (heroVisible && !document.hidden) video.play().catch(() => {});
       else video.pause();
+    };
+    const relancer = () => {
+      if (video.paused) jouer();
     };
     const suivreImage = () => {
       if (typeof video.requestVideoFrameCallback !== "function") return;
@@ -354,11 +360,17 @@ export function HeroScene() {
       }
       video.dataset.mode = "boucle";
       video.loop = true;
-      video.addEventListener("canplay", jouer, { once: true });
+      /* React sets `muted` as a property only, never as the attribute, and
+         Safari looks at the attribute to let a video play on its own. */
+      video.muted = true;
+      video.setAttribute("muted", "");
+      video.setAttribute("playsinline", "");
       suivreImage();
       vigie.observe(video);
       document.addEventListener("visibilitychange", jouer);
+      window.addEventListener("touchend", relancer, { passive: true });
       video.src = BOUCLE_URL;
+      jouer();
     };
     /* Safari has no requestIdleCallback: a short delay after load stands in. */
     const idle = typeof window.requestIdleCallback === "function";
@@ -376,7 +388,7 @@ export function HeroScene() {
       annule = true;
       vigie.disconnect();
       document.removeEventListener("visibilitychange", jouer);
-      video.removeEventListener("canplay", jouer);
+      window.removeEventListener("touchend", relancer);
       if (rappel) video.cancelVideoFrameCallback(rappel);
       video.pause();
       if (idle) window.cancelIdleCallback(attente);
