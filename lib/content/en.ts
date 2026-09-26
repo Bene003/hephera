@@ -24,8 +24,13 @@ export const en: Dictionary = {
     titleStart: "We build the",
     titleAccent: "digital tools",
     titleEnd: "that grow your business.",
+    question: "So, what are we building together?",
     primaryCta: "Start a project",
     secondaryCta: "See the services",
+    methodCta: "See how we work",
+    referencesCta: "See our clients",
+    emailLabel: "Write to us:",
+    copied: "Address copied",
     marquee: [
       "Marketing websites",
       "Custom platforms",
@@ -51,7 +56,7 @@ export const en: Dictionary = {
     eyebrow: "Selected clients",
     title: "Businesses already running on what we built",
     subtitle:
-      "Healthcare, e-commerce, tourism, culture, craft. Across France, Spain, Portugal, Italy, Greece and the Netherlands.",
+      "E-commerce, tourism, culture. Across France, Portugal, Greece and the Netherlands.",
     hint: "Every name opens the site we shipped.",
   },
 
@@ -82,6 +87,11 @@ export const en: Dictionary = {
         title: "Understand",
         description:
           "We study your business, your customers, your competitors and what's eating your time. Out of it comes one measurable goal.",
+        specs: [
+          { k: "What we study", v: "Your business, your customers, your competitors" },
+          { k: "What we look for", v: "What's eating your time" },
+          { k: "What comes out", tag: "One measurable goal" },
+        ],
       },
       {
         n: "02",
@@ -89,6 +99,11 @@ export const en: Dictionary = {
         title: "Design",
         description:
           "Architecture, user journeys, mockups, technical plan. You sign off before the first line of code.",
+        specs: [
+          { k: "What we draw", v: "Architecture, user journeys, mockups" },
+          { k: "What we plan", v: "The technical plan" },
+          { k: "Your sign-off", tag: "Before the first line of code" },
+        ],
       },
       {
         n: "03",
@@ -96,6 +111,10 @@ export const en: Dictionary = {
         title: "Build",
         description:
           "Development, content, integrations, automation. Shipped in stages, with regular checkpoints.",
+        specs: [
+          { k: "What we ship", v: "Development, content, integrations, automation" },
+          { k: "The pace", v: "In stages, with regular checkpoints" },
+        ],
       },
       {
         n: "04",
@@ -103,6 +122,10 @@ export const en: Dictionary = {
         title: "Evolve",
         description:
           "We measure, we adjust, we add. Your tools grow alongside your business.",
+        specs: [
+          { k: "The cycle", v: "We measure, we adjust, we add" },
+          { k: "The goal", tag: "Tools that grow with you" },
+        ],
       },
     ],
   },

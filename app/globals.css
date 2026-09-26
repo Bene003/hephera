@@ -451,6 +451,52 @@ body {
   animation: reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Hero orbits. The arm turns around the ring's centre; the badge on its tip
+   turns the other way at the same speed, so the logo stays upright. */
+@keyframes orbite-horaire {
+  from {
+    transform: rotate(var(--angle));
+  }
+  to {
+    transform: rotate(calc(var(--angle) + 360deg));
+  }
+}
+@keyframes orbite-antihoraire {
+  from {
+    transform: rotate(var(--angle));
+  }
+  to {
+    transform: rotate(calc(var(--angle) - 360deg));
+  }
+}
+@keyframes contre-horaire {
+  from {
+    transform: rotate(var(--contre));
+  }
+  to {
+    transform: rotate(calc(var(--contre) - 360deg));
+  }
+}
+@keyframes contre-antihoraire {
+  from {
+    transform: rotate(var(--contre));
+  }
+  to {
+    transform: rotate(calc(var(--contre) + 360deg));
+  }
+}
+
+/* Typing caret in the hero. */
+@keyframes caret-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -478,7 +524,9 @@ body {
   .animate-svcweb-convert,
   .animate-svcauto-manual,
   .animate-svcauto-pile,
-  .animate-svcseo-click {
+  .animate-svcseo-click,
+  .orbite-bras,
+  .orbite-pastille {
     animation: none !important;
   }
 }

@@ -1,6 +1,6 @@
 import { Container, SectionHeading } from "../ui";
 import { Reveal } from "../reveal";
-import { SpatialMethodShowcase } from "../ui/spatial-method-showcase";
+import { CableMethodShowcase } from "../ui/cable-method-showcase";
 import type { Dictionary } from "@/lib/content";
 
 export function Method({ dict }: { dict: Dictionary }) {
@@ -23,13 +23,11 @@ export function Method({ dict }: { dict: Dictionary }) {
       </Container>
 
       <div className="mt-8 sm:mt-12">
-        <SpatialMethodShowcase
+        <CableMethodShowcase
           steps={method.steps}
           labels={{
             step: method.stepLabel,
             of: method.stepOf,
-            prev: method.prev,
-            next: method.next,
           }}
         />
       </div>

@@ -24,8 +24,13 @@ export const fr = {
     titleStart: "Nous construisons les",
     titleAccent: "outils numériques",
     titleEnd: "qui font grandir votre entreprise.",
+    question: "Qu'est-ce qu'on construit ensemble ?",
     primaryCta: "Démarrer un projet",
     secondaryCta: "Voir les services",
+    methodCta: "Voir notre méthode",
+    referencesCta: "Voir nos références",
+    emailLabel: "Écrivez-nous :",
+    copied: "Adresse copiée",
     marquee: [
       "Sites vitrines",
       "Sites sur mesure",
@@ -51,7 +56,7 @@ export const fr = {
     eyebrow: "Références",
     title: "Des entreprises qui tournent déjà avec nos outils",
     subtitle:
-      "Santé, e-commerce, tourisme, culture, artisanat. En France, en Espagne, au Portugal, en Italie, en Grèce et aux Pays-Bas.",
+      "E-commerce, tourisme, culture. En France, au Portugal, en Grèce et aux Pays-Bas.",
     /** Sur mobile la bande défile : rien n'indique qu'un nom est cliquable. */
     hint: "Chaque nom ouvre le site livré.",
   },
@@ -83,6 +88,11 @@ export const fr = {
         title: "Comprendre",
         description:
           "On étudie votre activité, vos clients, vos concurrents et ce qui vous coûte du temps. On en sort un objectif chiffré.",
+        specs: [
+          { k: "Ce qu'on étudie", v: "Votre activité, vos clients, vos concurrents" },
+          { k: "Ce qu'on repère", v: "Ce qui vous coûte du temps" },
+          { k: "Ce qui en sort", tag: "Un objectif chiffré" },
+        ],
       },
       {
         n: "02",
@@ -90,6 +100,11 @@ export const fr = {
         title: "Concevoir",
         description:
           "Architecture, parcours, maquettes, plan technique. Vous validez avant la première ligne de code.",
+        specs: [
+          { k: "Ce qu'on dessine", v: "Architecture, parcours, maquettes" },
+          { k: "Ce qu'on planifie", v: "Le plan technique" },
+          { k: "Votre feu vert", tag: "Avant la première ligne de code" },
+        ],
       },
       {
         n: "03",
@@ -97,6 +112,13 @@ export const fr = {
         title: "Construire",
         description:
           "Développement, contenus, intégrations, automatisations. Livré par étapes, avec des points réguliers.",
+        specs: [
+          {
+            k: "Ce qu'on livre",
+            v: "Développement, contenus, intégrations, automatisations",
+          },
+          { k: "Le rythme", v: "Par étapes, avec des points réguliers" },
+        ],
       },
       {
         n: "04",
@@ -104,6 +126,10 @@ export const fr = {
         title: "Faire évoluer",
         description:
           "On mesure, on ajuste, on ajoute. Vos outils grandissent avec votre entreprise.",
+        specs: [
+          { k: "Le cycle", v: "On mesure, on ajuste, on ajoute" },
+          { k: "L'objectif", tag: "Des outils qui grandissent avec vous" },
+        ],
       },
     ],
   },

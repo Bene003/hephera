@@ -14,13 +14,9 @@ export type Client = {
 };
 
 export const clients: Client[] = [
-  { name: "Castellana Clínica Dental", url: "castellanaclinicadental.es" },
   { name: "Wrong Sense", url: "wrongsense.com" },
-  { name: "Lisbon by Design", url: "www.lisbonbydesign.com" },
   { name: "Ericeira Sense", url: "ericeirasense.com" },
   { name: "Black Cat Cinema", url: "www.theblackcatcinema.com" },
-  { name: "Inside Marbella", url: "insidemarbella.es" },
-  { name: "Ceramiche De Simone", url: "www.ceramichedesimone.com" },
   { name: "Athens Food on Foot", url: "www.athensfoodonfoot.com" },
   { name: "Les Caves du Père Auguste", url: "www.pereauguste.com" },
   { name: "Frédéric Rent a Bike", url: "www.frederic.nl" },

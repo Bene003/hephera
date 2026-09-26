@@ -122,9 +122,11 @@ export function ScrollMorphServices({
     target: sectionRef,
     offset: ["start start", "end end"],
   });
-  // Finish the composition early, then leave a generous interaction plateau
-  // before the sticky stage is allowed to leave the viewport.
-  const morphProgress = useTransform(scrollYProgress, [0.05, 0.34], [0, 1]);
+  // The composition takes about 60vh of scroll, then a short plateau lets the
+  // cards be explored before the stage leaves. The section used to be 340vh
+  // with the composition done at a third: two screens of scrolling where
+  // nothing moved.
+  const morphProgress = useTransform(scrollYProgress, [0.05, 0.55], [0, 1]);
   const smoothMorph = useSpring(morphProgress, {
     stiffness: 60,
     damping: 22,
@@ -138,74 +140,6 @@ export function ScrollMorphServices({
       setOpenId(null);
     }
   });
-
-  // Read inside the scroll listener, where React state would be a stale closure.
-  const progressRef = useRef(0);
-  useMotionValueEvent(scrollYProgress, "change", (value) => {
-    progressRef.current = value;
-  });
-
-  // Hold the section: intercept the approach as well as the pinned stage so one
-  // large wheel/touch impulse cannot jump across it. While focused, input is
-  // converted to short, capped steps; the user must deliberately scroll through
-  // the composition regardless of the raw velocity reported by the device.
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    const HOLD_START_UP = 0.04;
-    const HOLD_END_DOWN = 0.76;
-    const APPROACH_ZONE = 0.72;
-
-    const shouldHold = (delta: number) => {
-      const progress = progressRef.current;
-      const rect = section.getBoundingClientRect();
-
-      if (delta > 0) {
-        const approaching = rect.top > 0 && rect.top <= window.innerHeight * APPROACH_ZONE;
-        const pinned = rect.top <= 0 && rect.bottom >= window.innerHeight;
-        return approaching || (pinned && progress < HOLD_END_DOWN);
-      }
-
-      const pinned = rect.top <= 0 && rect.bottom >= window.innerHeight;
-      return pinned && progress > HOLD_START_UP;
-    };
-
-    const advance = (delta: number, cap: number) => {
-      window.scrollBy({
-        top: Math.sign(delta) * Math.min(Math.max(Math.abs(delta) * 0.22, 8), cap),
-        behavior: "instant",
-      });
-    };
-
-    const onWheel = (event: WheelEvent) => {
-      if (!shouldHold(event.deltaY)) return;
-      event.preventDefault();
-      advance(event.deltaY, 28);
-    };
-
-    let lastTouchY = 0;
-    const onTouchStart = (event: TouchEvent) => {
-      lastTouchY = event.touches[0].clientY;
-    };
-    const onTouchMove = (event: TouchEvent) => {
-      const delta = lastTouchY - event.touches[0].clientY;
-      lastTouchY = event.touches[0].clientY;
-      if (!shouldHold(delta)) return;
-      event.preventDefault();
-      advance(delta, 20);
-    };
-
-    window.addEventListener("wheel", onWheel, { passive: false });
-    window.addEventListener("touchstart", onTouchStart, { passive: true });
-    window.addEventListener("touchmove", onTouchMove, { passive: false });
-    return () => {
-      window.removeEventListener("wheel", onWheel);
-      window.removeEventListener("touchstart", onTouchStart);
-      window.removeEventListener("touchmove", onTouchMove);
-    };
-  }, []);
 
   const pointerX = useMotionValue(0);
   const parallaxX = useSpring(pointerX, { stiffness: 30, damping: 20 });
@@ -289,7 +223,7 @@ export function ScrollMorphServices({
   const arcOpacity = clamp01((morph - 0.55) / 0.4);
 
   return (
-    <div ref={sectionRef} className="relative h-[340vh]">
+    <div ref={sectionRef} className="relative h-[220vh]">
       <div
         ref={stageRef}
         className="sticky top-0 flex h-screen items-center justify-center overflow-hidden"

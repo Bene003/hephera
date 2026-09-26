@@ -1,8 +1,12 @@
-import { ButtonLink, Container, ForgeGlow } from "../ui";
-import OrbitingCirclesGlobe from "../ui/orbiting-circles-02";
-import type { Locale } from "@/lib/i18n";
+import { HeroConversation } from "./hero-conversation";
+import { HeroScene } from "./hero-scene";
+import { CONTACT_EMAIL, type Locale } from "@/lib/i18n";
 import type { Dictionary } from "@/lib/content";
 
+/**
+ * The hero talks: the title typed out as a message and the ways forward
+ * offered as replies, over a robot the mouse turns.
+ */
 export function Hero({
   locale,
   dict,
@@ -11,62 +15,46 @@ export function Hero({
   dict: Dictionary;
 }) {
   const { hero } = dict;
+  const title = `${hero.titleStart} ${hero.titleAccent} ${hero.titleEnd}`;
 
   return (
-    <section className="relative overflow-hidden">
-      <ForgeGlow />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 bg-anvil [mask-image:radial-gradient(ellipse_70%_60%_at_50%_35%,black,transparent)]"
-      />
+    <section className="relative">
+      {/* The background is the wall colour sampled from the video: where the
+          video is smaller than the hero, on portrait phones, its edges melt
+          into it. It also keeps the black copy readable while the video loads
+          or if it never does. The text sits on the left of wide screens and
+          under the robot on portrait phones. */}
+      <div className="relative flex h-[calc(100svh-4.5rem)] min-h-[34rem] flex-col justify-center overflow-hidden bg-[#979694] px-5 font-['Helvetica_Neue',Helvetica,Arial,sans-serif] sm:px-8 md:px-10 max-lg:portrait:justify-end max-lg:portrait:pb-12">
+        <HeroScene />
 
-      <div className="relative">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-0"
-        >
-          <OrbitingCirclesGlobe />
+        <div className="relative z-10 max-w-xl">
+          <h1 className="sr-only">{title}</h1>
+          <p className="sr-only">{hero.question}</p>
+          <HeroConversation
+            text={`${title} ${hero.question}`}
+            pills={[
+              { label: hero.primaryCta, href: `/${locale}/contact` },
+              { label: hero.secondaryCta, href: `/${locale}#services` },
+              { label: hero.methodCta, href: `/${locale}#methode` },
+              { label: hero.referencesCta, href: `/${locale}#references` },
+            ]}
+            email={CONTACT_EMAIL}
+            emailLabel={hero.emailLabel}
+            copiedLabel={hero.copied}
+          />
         </div>
-
-        <Container className="relative z-10 pt-20 pb-36 sm:pt-24 md:pt-28 md:pb-52">
-          <div className="relative mx-auto max-w-3xl text-center">
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -inset-x-24 -inset-y-16 -z-10 bg-[radial-gradient(ellipse_at_center,rgba(7,7,10,0.92),rgba(7,7,10,0.7)_52%,transparent_78%)]"
-            />
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-[0.7rem] font-medium tracking-[0.16em] text-bone-300 uppercase">
-              <span className="size-1.5 rounded-full bg-ember-500 shadow-[0_0_12px_2px_rgba(255,122,24,0.8)]" />
-              {hero.eyebrow}
-            </span>
-
-            <h1 className="mt-8 font-display text-4xl leading-[1.08] font-semibold text-balance text-bone-50 sm:text-6xl">
-              {hero.titleStart}{" "}
-              <span className="text-molten">{hero.titleAccent}</span>{" "}
-              {hero.titleEnd}
-            </h1>
-
-            <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <ButtonLink href={`/${locale}/contact`} withArrow>
-                {hero.primaryCta}
-              </ButtonLink>
-              <ButtonLink href={`/${locale}#services`} variant="ghost">
-                {hero.secondaryCta}
-              </ButtonLink>
-            </div>
-          </div>
-        </Container>
       </div>
 
-      <div className="relative border-y border-white/8 bg-ink-900/50 py-4">
+      <div className="relative border-y border-white/8 bg-ink-900/50 py-6 md:py-9">
         <div className="flex overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_12%,black_88%,transparent)]">
-          <div className="flex shrink-0 animate-marquee items-center gap-10 pr-10">
+          <div className="flex shrink-0 animate-marquee items-center gap-12 pr-12 md:gap-16 md:pr-16">
             {[...hero.marquee, ...hero.marquee].map((item, index) => (
               <span
                 key={`${item}-${index}`}
-                className="flex shrink-0 items-center gap-10 font-display text-xs tracking-[0.2em] text-bone-500 uppercase"
+                className="flex shrink-0 items-center gap-12 font-display text-base tracking-[0.2em] text-bone-300 uppercase md:gap-16 md:text-2xl"
               >
                 {item}
-                <span className="size-1 rounded-full bg-ember-500/60" />
+                <span className="size-1.5 rounded-full bg-ember-500/70 md:size-2" />
               </span>
             ))}
           </div>
