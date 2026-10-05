@@ -11,13 +11,17 @@ export type Client = {
   name: string;
   /** No scheme, no trailing slash: the band prints this and links to it. */
   url: string;
+  /** The stack the site runs on, shown next to the name. */
+  tech: string;
 };
 
 export const clients: Client[] = [
-  { name: "Wrong Sense", url: "wrongsense.com" },
-  { name: "Ericeira Sense", url: "ericeirasense.com" },
-  { name: "Black Cat Cinema", url: "www.theblackcatcinema.com" },
-  { name: "Athens Food on Foot", url: "www.athensfoodonfoot.com" },
-  { name: "Les Caves du Père Auguste", url: "www.pereauguste.com" },
-  { name: "Frédéric Rent a Bike", url: "www.frederic.nl" },
+  { name: "Wrong Sense", url: "wrongsense.com", tech: "Shopify" },
+  { name: "Frédéric Rent a Bike", url: "www.frederic.nl", tech: "Wix" },
+  { name: "Les Petits Yéyés", url: "www.lespetitsyeyes.com", tech: "Shopify" },
+  { name: "Mello", url: "mello-matelas.fr", tech: "Shopify" },
+  { name: "361 Studios", url: "www.361studios.ca", tech: "Next.js" },
+  { name: "DeezShop", url: "www.deezshop.ca", tech: "Next.js" },
+  { name: "Lambert", url: "www.designlambert.com", tech: "Shopify" },
+  { name: "Synergy Homes", url: "synergyhomeswpg.ca", tech: "Next.js" },
 ];

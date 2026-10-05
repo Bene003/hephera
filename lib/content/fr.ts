@@ -56,7 +56,7 @@ export const fr = {
     eyebrow: "Références",
     title: "Des entreprises qui tournent déjà avec nos outils",
     subtitle:
-      "E-commerce, tourisme, culture. En France, au Portugal, en Grèce et aux Pays-Bas.",
+      "E-commerce, mode, maison, studios créatifs, construction. Au Canada et en Europe.",
     /** Sur mobile la bande défile : rien n'indique qu'un nom est cliquable. */
     hint: "Chaque nom ouvre le site livré.",
   },

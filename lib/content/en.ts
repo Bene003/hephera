@@ -56,7 +56,7 @@ export const en: Dictionary = {
     eyebrow: "Selected clients",
     title: "Businesses already running on what we built",
     subtitle:
-      "E-commerce, tourism, culture. Across France, Portugal, Greece and the Netherlands.",
+      "E-commerce, fashion, home goods, creative studios, construction. In Canada and Europe.",
     hint: "Every name opens the site we shipped.",
   },
 

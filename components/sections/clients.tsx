@@ -38,6 +38,10 @@ export function Clients({ dict }: { dict: Dictionary }) {
                   className="rounded-sm font-display text-lg whitespace-nowrap text-bone-400 transition-colors duration-300 hover:text-bone-50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ember-400 sm:text-xl"
                 >
                   {client.name}
+                  {" "}
+                  <span className="ml-1.5 align-middle font-sans text-[0.62rem] tracking-[0.16em] text-bone-500 uppercase sm:text-[0.68rem]">
+                    {client.tech}
+                  </span>
                 </a>
                 <span
                   aria-hidden
@@ -58,6 +62,10 @@ export function Clients({ dict }: { dict: Dictionary }) {
               <li key={client.name} className="flex shrink-0 items-center gap-10">
                 <span className="font-display text-lg whitespace-nowrap text-bone-400 sm:text-xl">
                   {client.name}
+                  {" "}
+                  <span className="ml-1.5 align-middle font-sans text-[0.62rem] tracking-[0.16em] text-bone-500 uppercase sm:text-[0.68rem]">
+                    {client.tech}
+                  </span>
                 </span>
                 <span className="size-1 rounded-full bg-ember-500/60" />
               </li>
