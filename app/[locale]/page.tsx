@@ -10,7 +10,7 @@ import { Values } from "@/components/sections/values";
 import { Faq } from "@/components/sections/faq";
 import { FinalCta } from "@/components/sections/final-cta";
 import { getDictionary } from "@/lib/content";
-import { isLocale, SITE_URL } from "@/lib/i18n";
+import { isLocale, SITE_URL, CONTACT_EMAIL } from "@/lib/i18n";
 
 export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const { locale } = await params;
@@ -24,7 +24,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
     name: "Hephera",
     description: dict.meta.description,
     url: `${SITE_URL}/${locale}`,
-    email: "contact@hephera.com",
+    email: CONTACT_EMAIL,
     knowsLanguage: ["fr", "en"],
     serviceType: Object.values(dict.serviceContent).map(
       (service) => service.name,
