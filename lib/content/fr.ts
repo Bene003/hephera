@@ -12,6 +12,7 @@ export const fr = {
     services: "Services",
     method: "Méthode",
     figures: "Chiffres clés",
+    about: "À propos",
     contact: "Contact",
     cta: "Démarrer un projet",
     menu: "Menu",

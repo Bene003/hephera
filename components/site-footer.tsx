@@ -1,3 +1,4 @@
+import { aProposSlug } from "@/lib/a-propos-slug";
 import Link from "next/link";
 import { Wordmark } from "./logo";
 import { CONTACT_EMAIL, type Locale } from "@/lib/i18n";
@@ -57,6 +58,7 @@ export function SiteFooter({
                 },
                 { href: `/${locale}#valeurs`, label: footer.links.values },
                 { href: `/${locale}#faq`, label: footer.links.faq },
+                { href: `/${locale}/${aProposSlug[locale]}`, label: dict.nav.about },
               ].map((link) => (
                 <li key={link.href}>
                   <Link

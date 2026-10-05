@@ -12,6 +12,7 @@ export const en: Dictionary = {
     services: "Services",
     method: "Method",
     figures: "Key figures",
+    about: "About",
     contact: "Contact",
     cta: "Start a project",
     menu: "Menu",

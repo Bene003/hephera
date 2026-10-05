@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { locales, SITE_URL } from "@/lib/i18n";
 import { serviceKeys, serviceSlugs } from "@/lib/services";
+import { aProposSlug } from "@/lib/a-propos-slug";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = [];
@@ -19,6 +20,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
         lastModified,
         changeFrequency: "yearly",
         priority: 0.7,
+      },
+      {
+        url: `${SITE_URL}/${locale}/${aProposSlug[locale]}`,
+        lastModified,
+        changeFrequency: "yearly",
+        priority: 0.6,
       },
     );
 

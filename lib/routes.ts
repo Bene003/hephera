@@ -1,3 +1,4 @@
+import { aProposSlug } from "./a-propos-slug";
 import type { Locale } from "./i18n";
 import { serviceKeyFromSlug, serviceSlugs } from "./services";
 
@@ -11,6 +12,9 @@ export function switchLocalePath(
   if (segments.length === 0) return `/${target}`;
 
   segments[0] = target;
+
+  // The founder page has a translated address: /fr/a-propos <-> /en/about.
+  if (segments[1] === aProposSlug[current]) segments[1] = aProposSlug[target];
 
   if (segments[1] === "services" && segments[2]) {
     const key = serviceKeyFromSlug(current, segments[2]);

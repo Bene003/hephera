@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { aProposSlug } from "@/lib/a-propos-slug";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Wordmark } from "./logo";
@@ -40,6 +41,7 @@ export function SiteHeader({ locale, nav }: Props) {
     { href: `/${locale}#services`, label: nav.services },
     { href: `/${locale}#methode`, label: nav.method },
     { href: `/${locale}#chiffres`, label: nav.figures },
+    { href: `/${locale}/${aProposSlug[locale]}`, label: nav.about },
     { href: `/${locale}#contact`, label: nav.contact },
   ];
 
