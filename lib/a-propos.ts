@@ -9,7 +9,7 @@ export const aPropos = {
   fr: {
     metaTitle: "À propos d'Eben Kwete, fondateur",
     metaDescription:
-      "Eben Kwete, fondateur d'Hephera : développeur web depuis 2019, il conçoit et construit lui-même chaque projet, du premier échange à la mise en ligne.",
+      "Eben Kwete, fondateur d'Hephera : formé en informatique à l'UQAM, il conçoit et construit lui-même chaque projet, du premier échange à la mise en ligne.",
     eyebrow: "À propos",
     title: "Eben Kwete,",
     titleAccent: "fondateur d'Hephera",
@@ -17,15 +17,15 @@ export const aPropos = {
     photoAlt: "Portrait d'Eben Kwete, fondateur d'Hephera",
     storyTitle: "Mon parcours",
     story: [
-      "J'ai commencé à coder en 2019, seul, parce que je voulais construire des choses qui existent en dehors de ma tête. Cet instinct a ensuite rencontré une formation : un baccalauréat en développement web.",
-      "Depuis, j'ai livré des sites et des outils pour des entreprises en France, en Italie, en Espagne, au Portugal, aux Pays-Bas et au Canada : boutiques en ligne, plateformes de réservation, sites vitrines.",
+      "J'ai étudié l'informatique à l'UQAM, de 2019 à 2022. C'est là que j'ai appris à construire un logiciel de bout en bout : les données, l'architecture, puis l'interface.",
+      "J'ai ensuite travaillé pour des entreprises en France et au Canada, sur des boutiques en ligne, des plateformes de réservation et des sites vitrines.",
       "Je travaille sur toute la chaîne, du design au développement, en passant par le référencement et l'automatisation. En parallèle, je construis mes propres produits, ce qui me garde au contact de ce qui fonctionne vraiment.",
       "Basé au Canada, je travaille à distance, en français comme en anglais.",
     ],
     stats: [
-      { value: "2019", label: "Premières lignes de code" },
+      { value: "UQAM", label: "Informatique, 2019 à 2022" },
       { value: "13+", label: "Projets livrés" },
-      { value: "6", label: "Pays de clients" },
+      { value: "2", label: "Pays : France et Canada" },
     ],
     principlesTitle: "Ce qui guide chaque projet",
     principles: [
@@ -40,7 +40,7 @@ export const aPropos = {
   en: {
     metaTitle: "About Eben Kwete, founder",
     metaDescription:
-      "Eben Kwete, founder of Hephera: a web developer since 2019 who designs and builds every project himself, from the first conversation to launch.",
+      "Eben Kwete, founder of Hephera: trained in computer science at UQAM, he designs and builds every project himself, from the first conversation to launch.",
     eyebrow: "About",
     title: "Eben Kwete,",
     titleAccent: "founder of Hephera",
@@ -48,15 +48,15 @@ export const aPropos = {
     photoAlt: "Portrait of Eben Kwete, founder of Hephera",
     storyTitle: "My background",
     story: [
-      "I started coding in 2019, on my own, because I wanted to build things that existed outside my head. That instinct later met formal training: a bachelor's degree in web development.",
-      "Since then, I have delivered websites and tools for businesses in France, Italy, Spain, Portugal, the Netherlands and Canada: online stores, booking platforms, business websites.",
+      "I studied computer science at UQAM from 2019 to 2022. That is where I learned to build software end to end: the data, the architecture, then the interface.",
+      "I then worked for businesses in France and Canada, on online stores, booking platforms and business websites.",
       "I work across the whole chain, from design to development, SEO and automation. On the side, I build products of my own, which keeps me close to what actually works.",
       "Based in Canada, I work remotely, in English and French.",
     ],
     stats: [
-      { value: "2019", label: "First lines of code" },
+      { value: "UQAM", label: "Computer science, 2019 to 2022" },
       { value: "13+", label: "Projects delivered" },
-      { value: "6", label: "Client countries" },
+      { value: "2", label: "Countries: France and Canada" },
     ],
     principlesTitle: "What guides every project",
     principles: [
