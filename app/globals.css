@@ -530,3 +530,164 @@ body {
     animation: none !important;
   }
 }
+
+/* ==========================================================================
+   MENU MOBILE : la page glisse de côté et révèle le menu, effet cyberpunk
+   discret. Ne concerne que les écrans sous 1024 px (le bouton et le panneau
+   sont masqués au-delà). Fermé, rien ne change : aucune transformation.
+   ========================================================================== */
+.page-shell {
+  position: relative;
+  z-index: 10;
+  background: var(--color-ink-950);
+  transition:
+    transform 550ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-radius 550ms ease,
+    box-shadow 550ms ease;
+}
+
+html[data-menu="open"] .page-shell {
+  transform-origin: 0 var(--menu-origine, 50vh);
+  transform: translateX(calc(-1 * min(18rem, 78vw))) scale(0.94);
+  border-radius: 1.25rem;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgb(255 122 24 / 0.35),
+    0 0 36px -8px rgb(255 122 24 / 0.4),
+    18px 0 60px -24px rgb(34 211 238 / 0.35);
+}
+
+/* Voile cliquable sur la page repoussée : un clic la ramène. */
+html[data-menu="open"] .page-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  cursor: pointer;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgb(7 7 10 / 0.18) 0 1px,
+    transparent 1px 4px
+  );
+}
+
+.menu-cyber {
+  background:
+    radial-gradient(120% 60% at 100% 0%, rgb(34 211 238 / 0.08), transparent 60%),
+    radial-gradient(120% 60% at 100% 100%, rgb(255 122 24 / 0.08), transparent 60%),
+    var(--color-ink-950);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 250ms ease,
+    visibility 0s linear 550ms;
+}
+
+.menu-cyber[data-ouvert] {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 300ms ease 120ms;
+}
+
+/* Voile sur la vidéo du menu : sombre en haut (les liens) et en bas (les
+   boutons), plus léger au milieu où les faisceaux se croisent. */
+.menu-cyber-voile {
+  background: linear-gradient(
+    to bottom,
+    rgb(7 7 10 / 0.78) 0%,
+    rgb(7 7 10 / 0.55) 45%,
+    rgb(7 7 10 / 0.35) 62%,
+    rgb(7 7 10 / 0.7) 100%
+  );
+}
+
+/* Lignes de balayage, très légères. */
+.menu-cyber::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgb(255 255 255 / 0.025) 0 1px,
+    transparent 1px 3px
+  );
+}
+
+/* Bord néon, du cyan vers l'orange de la marque. */
+.menu-cyber::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 1px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgb(34 211 238 / 0.9), rgb(255 122 24 / 0.9));
+  box-shadow: 0 0 14px rgb(34 211 238 / 0.55);
+}
+
+.menu-cyber-lien {
+  position: relative;
+  opacity: 0;
+}
+
+.menu-cyber[data-ouvert] .menu-cyber-lien {
+  animation: cyber-entree 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(180ms + var(--rang, 0) * 60ms);
+}
+
+.menu-cyber-lien:hover .menu-cyber-texte,
+.menu-cyber-lien:focus-visible .menu-cyber-texte {
+  color: var(--color-bone-50);
+  text-shadow:
+    -1px 0 rgb(34 211 238 / 0.7),
+    1px 0 rgb(255 122 24 / 0.7);
+  animation: cyber-glitch 280ms steps(3) 1;
+}
+
+@keyframes cyber-entree {
+  0% {
+    opacity: 0;
+    transform: translateX(14px);
+    clip-path: inset(0 0 100% 0);
+  }
+  35% {
+    opacity: 1;
+    clip-path: inset(0 0 45% 0);
+  }
+  55% {
+    clip-path: inset(40% 0 0 0);
+    transform: translateX(-2px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0);
+  }
+}
+
+@keyframes cyber-glitch {
+  0% { transform: translateX(0); }
+  33% { transform: translateX(-1px); }
+  66% { transform: translateX(1px); }
+  100% { transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-shell,
+  .menu-cyber,
+  .menu-cyber[data-ouvert] {
+    transition: none;
+  }
+  html[data-menu="open"] .page-shell {
+    transform: translateX(calc(-1 * min(18rem, 78vw)));
+  }
+  .menu-cyber[data-ouvert] .menu-cyber-lien {
+    animation: none;
+    opacity: 1;
+  }
+  .menu-cyber-lien:hover .menu-cyber-texte,
+  .menu-cyber-lien:focus-visible .menu-cyber-texte {
+    animation: none;
+  }
+}

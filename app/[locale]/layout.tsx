@@ -74,9 +74,13 @@ export default async function LocaleLayout({
       className={`${sora.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-ink-950">
-        <SiteHeader locale={locale} nav={dict.nav} />
-        <main className="flex-1">{children}</main>
-        <SiteFooter locale={locale} dict={dict} />
+        {/* The page slides aside as one piece when the menu opens
+            (see .page-shell in globals.css and SiteHeader). */}
+        <div id="page-shell" className="page-shell flex flex-1 flex-col">
+          <SiteHeader locale={locale} nav={dict.nav} />
+          <main className="flex-1">{children}</main>
+          <SiteFooter locale={locale} dict={dict} />
+        </div>
       </body>
     </html>
   );
