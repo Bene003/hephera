@@ -193,7 +193,7 @@ export function Tour({ sectionRef, titre, noms, libelleEtage, afficheur, mobile,
     const onProgres = () => {
       const d = v.duration;
       if (!Number.isFinite(d) || d <= 0 || !v.buffered.length) return;
-      setCharge(Math.min(1, v.buffered.end(v.buffered.length - 1) / d));
+      setCharge((c) => Math.max(c, Math.min(1, v.buffered.end(v.buffered.length - 1) / d)));
     };
     v.addEventListener("progress", onProgres);
     v.addEventListener("canplaythrough", onProgres);
@@ -232,9 +232,43 @@ export function Tour({ sectionRef, titre, noms, libelleEtage, afficheur, mobile,
         return;
       }
       v.preload = "auto";                       // Safari loads nothing with preload="none", even after load()
-      v.src = window.matchMedia("(min-width: 48rem)").matches ? tour.bureau : tour.mobile;
-      v.load();
-      reveiller();
+      const adresse = window.matchMedia("(min-width: 48rem)").matches ? tour.bureau : tour.mobile;
+      /* The WHOLE file is downloaded first, then played from memory: scrubbing a video that is still
+         streaming makes every jump past the downloaded part wait for the network (the jerks seen in
+         production). Progress feeds the loading bar; until then each floor shows its still. */
+      enMemoire(adresse)
+        .then((url) => {
+          if (annule) return;
+          v.src = url;
+          v.load();
+          reveiller();
+        })
+        .catch(() => {
+          if (annule) return;
+          v.src = adresse;                       // no fetch streaming: let the browser stream it
+          v.load();
+          reveiller();
+        });
+    };
+    let annule = false;
+    let urlMemoire = "";
+    const enMemoire = async (adresse: string) => {
+      const rep = await fetch(adresse);
+      if (!rep.ok || !rep.body) throw new Error(String(rep.status));
+      const taille = Number(rep.headers.get("content-length")) || 0;
+      const lecteur = rep.body.getReader();
+      const morceaux: Uint8Array[] = [];
+      let recu = 0;
+      for (;;) {
+        const { done, value } = await lecteur.read();
+        if (done || annule) break;
+        morceaux.push(value);
+        recu += value.length;
+        if (taille) setCharge(Math.min(0.99, recu / taille));
+      }
+      setCharge(1);
+      urlMemoire = URL.createObjectURL(new Blob(morceaux as BlobPart[], { type: "video/mp4" }));
+      return urlMemoire;
     };
     /* Safari (iPhone first) decodes and buffers nothing until play() has been called once, so
        seeking does nothing: a muted, inline play() then an immediate pause() wakes it up. A refused
@@ -266,6 +300,8 @@ export function Tour({ sectionRef, titre, noms, libelleEtage, afficheur, mobile,
     raf = requestAnimationFrame(boucle);
     return () => {
       if (raf) cancelAnimationFrame(raf);
+      annule = true;
+      if (urlMemoire) URL.revokeObjectURL(urlMemoire);
       window.clearTimeout(attente);
       window.clearInterval(secours);
       window.removeEventListener("scroll", surDefilement);
@@ -322,7 +358,7 @@ export function Tour({ sectionRef, titre, noms, libelleEtage, afficheur, mobile,
           style={{ opacity: video === "ok" ? 0 : 1 }}
           onError={(e) => (e.currentTarget.style.display = "none")}
         />
-        {video === "non" &&
+        {video !== "ok" &&
           LANDINGS.map((id) => (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -402,7 +438,7 @@ export function Tour({ sectionRef, titre, noms, libelleEtage, afficheur, mobile,
       <div
         aria-hidden
         className="pointer-events-none absolute bottom-10 left-1/2 z-30 w-44 -translate-x-1/2 transition-opacity duration-700"
-        style={{ opacity: video !== "non" && charge < 0.98 && zone < 2 ? 1 : 0 }}
+        style={{ opacity: video !== "non" && charge < 0.98 ? 1 : 0 }}
       >
         <div className="h-px w-full overflow-hidden bg-white/10">
           <div className="h-full bg-ember-400 shadow-[0_0_8px_rgba(255,157,66,0.9)] transition-[width] duration-300" style={{ width: `${Math.round(charge * 100)}%` }} />
