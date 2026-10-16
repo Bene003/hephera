@@ -13,6 +13,7 @@ export const en: Dictionary = {
     method: "Method",
     figures: "Key figures",
     about: "About",
+    labs: "Labs",
     contact: "Contact",
     cta: "Start a project",
     menu: "Menu",

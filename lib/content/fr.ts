@@ -13,6 +13,7 @@ export const fr = {
     method: "Méthode",
     figures: "Chiffres clés",
     about: "À propos",
+    labs: "Labs",
     contact: "Contact",
     cta: "Démarrer un projet",
     menu: "Menu",

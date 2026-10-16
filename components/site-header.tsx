@@ -105,6 +105,7 @@ export function SiteHeader({ locale, nav }: Props) {
     { href: `/${locale}#services`, label: nav.services },
     { href: `/${locale}#methode`, label: nav.method },
     { href: `/${locale}#chiffres`, label: nav.figures },
+    { href: `/${locale}/labs`, label: nav.labs },
     { href: `/${locale}/${aProposSlug[locale]}`, label: nav.about },
     { href: `/${locale}#contact`, label: nav.contact },
   ];

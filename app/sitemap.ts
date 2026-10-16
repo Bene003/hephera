@@ -22,6 +22,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: 0.7,
       },
       {
+        url: `${SITE_URL}/${locale}/labs`,
+        lastModified,
+        changeFrequency: "monthly",
+        priority: 0.8,
+      },
+      {
         url: `${SITE_URL}/${locale}/${aProposSlug[locale]}`,
         lastModified,
         changeFrequency: "yearly",

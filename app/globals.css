@@ -691,3 +691,217 @@ html[data-menu="open"] .page-shell::after {
     animation: none;
   }
 }
+
+/* ------------------------------------------------------------------
+   Hephera Labs (components/sections/labs): one camera through one tower.
+   Video, wall screens and elevator display share the same drift, grain and
+   vignette, so the page reads as a single picture, not layers.
+   ------------------------------------------------------------------ */
+.labs-camera {
+  animation: labs-derive 14s ease-in-out infinite alternate;
+  transform-origin: 50% 45%;
+}
+@keyframes labs-derive {
+  from { transform: scale(1.015) translate3d(-0.25%, 0.1%, 0); }
+  to { transform: scale(1.03) translate3d(0.25%, -0.15%, 0); }
+}
+.labs-grain {
+  opacity: 0.11;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  animation: labs-grain 0.9s steps(4) infinite;
+}
+@keyframes labs-grain {
+  25% { background-position: 37px -21px; }
+  50% { background-position: -48px 33px; }
+  75% { background-position: 19px 52px; }
+}
+.labs-vignette {
+  background:
+    radial-gradient(120% 90% at 50% 45%, transparent 55%, rgba(7, 7, 10, 0.55) 100%),
+    linear-gradient(180deg, rgba(7, 7, 10, 0.35), transparent 14%, transparent 86%, rgba(7, 7, 10, 0.45));
+}
+
+/* A wall screen. The content has no box of its own: it is LIGHT added onto
+   the real screen of the frame (mix-blend screen: black adds nothing), so the
+   bezel, edges and reflections all stay the video's own. Edges are feathered
+   into the frame. It powers up like a screen: a line that opens, a flash. */
+.labs-ecran {
+  pointer-events: none;
+  mix-blend-mode: screen;
+  backface-visibility: hidden;
+}
+.labs-ecran-contenu {
+  color: var(--color-bone-100);
+  background: radial-gradient(85% 75% at 50% 45%, rgba(255, 122, 24, 0.1), rgba(255, 122, 24, 0.02) 70%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 2.5%, #000 97.5%, transparent),
+    linear-gradient(180deg, transparent, #000 4%, #000 96%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(90deg, transparent, #000 2.5%, #000 97.5%, transparent),
+    linear-gradient(180deg, transparent, #000 4%, #000 96%, transparent);
+  mask-composite: intersect;
+  clip-path: inset(50% 0 50% 0);
+  filter: brightness(2.4) saturate(0.3) blur(1px);
+  opacity: 0;
+  transition:
+    clip-path 0.55s cubic-bezier(0.7, 0, 0.2, 1),
+    filter 0.9s ease,
+    opacity 0.3s ease;
+}
+.labs-ecran-contenu::after {
+  /* the glass: fine scan lines, as on the real panel */
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 3px);
+}
+.labs-ecran[data-allume] {
+  pointer-events: auto;
+}
+.labs-ecran[data-allume] .labs-ecran-contenu {
+  clip-path: inset(0 0 0 0);
+  filter: brightness(1) saturate(1) blur(0);
+  opacity: 1;
+}
+/* What lives on a screen glows a little, like emitted light. */
+.labs-ecran .labs-page {
+  text-shadow: 0 0 18px rgba(255, 150, 70, 0.18);
+}
+.labs-page {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.45s ease, visibility 0s linear 0.45s;
+}
+.labs-page[data-visible] {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.6s ease 0.15s, visibility 0s;
+}
+/* Phones: the screen's light, in the page flow, over the held close-up of the screen. */
+.labs-ecran-mobile {
+  mix-blend-mode: normal;
+}
+.labs-ecran-mobile .labs-ecran-contenu {
+  background: radial-gradient(90% 70% at 50% 40%, rgba(255, 122, 24, 0.12), rgba(7, 7, 10, 0.55) 75%);
+  border-radius: 1rem;
+}
+
+/* The elevator: its display while it climbs, its floor buttons. */
+.labs-afficheur {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-ember-300);
+  background: rgba(7, 7, 10, 0.55);
+  box-shadow: inset 0 0 0 1px rgba(255, 157, 66, 0.22), 0 0 30px -8px rgba(255, 122, 24, 0.55);
+  text-shadow: 0 0 10px rgba(255, 140, 60, 0.75);
+}
+.labs-bouton {
+  color: var(--color-bone-300);
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.08), rgba(7, 7, 10, 0.6));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12), 0 4px 14px -6px rgba(0, 0, 0, 0.8);
+  transition: color 0.3s, box-shadow 0.3s;
+}
+.labs-bouton:hover {
+  color: var(--color-bone-50);
+}
+.labs-bouton[data-ici] {
+  color: var(--color-ember-200, #ffd0a0);
+  box-shadow: inset 0 0 0 1px rgba(255, 157, 66, 0.7), 0 0 18px -2px rgba(255, 122, 24, 0.8);
+  text-shadow: 0 0 8px rgba(255, 140, 60, 0.9);
+}
+
+.labs-braise-texte {
+  background: linear-gradient(90deg, #ffc078, #ff7a18 50%, #e2571e);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+/* Hephetion's mini ad */
+.labs-pub-fond {
+  background:
+    radial-gradient(70% 60% at 50% 40%, rgba(255, 122, 24, 0.32), transparent 70%),
+    linear-gradient(180deg, #16161f, #07070a);
+}
+.labs-pub-anneau {
+  border: 1px solid rgba(255, 157, 66, 0.35);
+  box-shadow: 0 0 60px -10px rgba(255, 122, 24, 0.6), inset 0 0 40px -10px rgba(255, 122, 24, 0.4);
+  animation: labs-anneau 3.6s ease-in-out infinite;
+}
+@keyframes labs-anneau {
+  50% { transform: translate(-50%, -50%) scale(1.08); opacity: 0.6; }
+}
+.labs-apparition {
+  animation: reveal-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+/* The project sheet: slides in from the right over a dimmed page. */
+.labs-fiche[open] {
+  animation: labs-fiche-entree 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.labs-fiche::backdrop {
+  background: rgba(7, 7, 10, 0.6);
+  backdrop-filter: blur(4px);
+}
+@keyframes labs-fiche-entree {
+  from { transform: translateX(100%); }
+}
+.labs-etapes li:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  top: 2rem;
+  bottom: -1rem;
+  width: 1px;
+  background: linear-gradient(rgba(255, 157, 66, 0.5), rgba(255, 157, 66, 0.05));
+}
+@media (prefers-reduced-motion: reduce) {
+  .labs-camera,
+  .labs-grain,
+  .labs-pub-anneau,
+  .labs-apparition,
+  .labs-fiche[open] {
+    animation: none;
+  }
+  .labs-ecran-contenu {
+    transition: opacity 0.2s ease;
+  }
+}
+.labs-zoom {
+  transition: transform 1.1s cubic-bezier(0.65, 0, 0.25, 1);
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .labs-zoom {
+    transition: none;
+  }
+}
+/* The elevator display's figure rolls in from below, like a mechanical counter. */
+.labs-chiffre {
+  display: inline-block;
+  animation: labs-chiffre 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes labs-chiffre {
+  from { transform: translateY(70%); opacity: 0; }
+}
+/* The scroll invitation: a light that runs down a thread. */
+.labs-defiler-trait {
+  transform-origin: top;
+  animation: labs-trait 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+@keyframes labs-trait {
+  0% { transform: scaleY(0); opacity: 1; }
+  60% { transform: scaleY(1); opacity: 1; }
+  100% { transform: scaleY(1); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .labs-chiffre,
+  .labs-defiler-trait {
+    animation: none;
+  }
+}

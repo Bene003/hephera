@@ -58,6 +58,7 @@ export function SiteFooter({
                 },
                 { href: `/${locale}#valeurs`, label: footer.links.values },
                 { href: `/${locale}#faq`, label: footer.links.faq },
+                { href: `/${locale}/labs`, label: dict.nav.labs },
                 { href: `/${locale}/${aProposSlug[locale]}`, label: dict.nav.about },
               ].map((link) => (
                 <li key={link.href}>
