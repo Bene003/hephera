@@ -112,6 +112,7 @@ export function Tour({ sectionRef, titre, noms, libelleEtage, afficheur, mobile,
     let raf = 0;
     let visible = true;
     let dernierTic = performance.now();
+    let eveillee = false;               // Safari woken up (see reveiller)
 
     const segment = (id: SegmentId) => {
       if (donnees) {
@@ -177,6 +178,10 @@ export function Tour({ sectionRef, titre, noms, libelleEtage, afficheur, mobile,
     const onSeeked = () => {
       enCours = false;
     };
+    const onPlay = () => {
+      if (eveillee) v.pause();
+    };
+    v.addEventListener("play", onPlay);
     const onErreur = () => {
       enCours = false;
       setVideo("non");
@@ -229,7 +234,28 @@ export function Tour({ sectionRef, titre, noms, libelleEtage, afficheur, mobile,
       v.preload = "auto";                       // Safari loads nothing with preload="none", even after load()
       v.src = window.matchMedia("(min-width: 48rem)").matches ? tour.bureau : tour.mobile;
       v.load();
+      reveiller();
     };
+    /* Safari (iPhone first) decodes and buffers nothing until play() has been called once, so
+       seeking does nothing: a muted, inline play() then an immediate pause() wakes it up. A refused
+       play() (low power mode) is tried again on the first touch or key press. */
+    const reveiller = () => {
+      if (eveillee || !v.src) return;
+      v.muted = true;
+      v.setAttribute("muted", "");             // Safari reads the attribute, React only sets the property
+      const essai = v.play();
+      if (!essai) return;
+      essai
+        .then(() => {
+          eveillee = true;
+          v.pause();
+          v.currentTime = Math.max(0, lisse);
+        })
+        .catch(() => {});
+    };
+    window.addEventListener("touchstart", reveiller, { passive: true });
+    window.addEventListener("pointerdown", reveiller);
+    window.addEventListener("keydown", reveiller);
     const plusTard = () => {
       const w = window as Window & { requestIdleCallback?: (f: () => void, o?: { timeout: number }) => number };
       attente = w.requestIdleCallback ? w.requestIdleCallback(charger, { timeout: 1500 }) : window.setTimeout(charger, 300);
@@ -243,9 +269,13 @@ export function Tour({ sectionRef, titre, noms, libelleEtage, afficheur, mobile,
       window.clearTimeout(attente);
       window.clearInterval(secours);
       window.removeEventListener("scroll", surDefilement);
+      window.removeEventListener("touchstart", reveiller);
+      window.removeEventListener("pointerdown", reveiller);
+      window.removeEventListener("keydown", reveiller);
       window.removeEventListener("resize", surDefilement);
       vigie.disconnect();
       v.removeEventListener("seeked", onSeeked);
+      v.removeEventListener("play", onPlay);
       v.removeEventListener("error", onErreur);
       v.removeEventListener("loadedmetadata", onMeta);
       v.removeEventListener("progress", onProgres);
