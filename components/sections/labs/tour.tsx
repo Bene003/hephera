@@ -37,6 +37,29 @@ const LANDINGS: SegmentId[] = ["P0", "P1", "P2", "P3", "T"];
 /** The screen content is laid out once at this size, then scaled onto each wall. */
 export const ECRAN_L = 970;
 export const ECRAN_H = 540;
+/** Phones: portrait screens, laid out at phone width. */
+const ECRAN_L_MOBILE = 400;
+
+/** Shrinks its content just enough to fit the screen it is on: nothing is ever cut off. */
+function Ajuste({ hauteur, children }: { hauteur: number; children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [echelle, setEchelle] = useState(1);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const mesurer = () => setEchelle(Math.min(1, hauteur / Math.max(1, el.scrollHeight)));
+    mesurer();
+    const obs = new ResizeObserver(mesurer);
+    obs.observe(el);
+    if (el.firstElementChild) obs.observe(el.firstElementChild);   // the content grows as a demo plays
+    return () => obs.disconnect();
+  }, [hauteur]);
+  return (
+    <div ref={ref} className="origin-top" style={{ transform: echelle < 1 ? `scale(${echelle})` : undefined, height: echelle < 1 ? hauteur / echelle : "100%" }}>
+      {children}
+    </div>
+  );
+}
 
 type Props = {
   sectionRef: RefObject<HTMLElement | null>;
@@ -75,23 +98,27 @@ export function Tour({ sectionRef, titre, noms, libelleEtage, afficheur, mobile,
   const [charge, setCharge] = useState(0);           // share of the video already downloaded
 
   useEffect(() => {
-    fetch(tour.donnees)
+    let annule = false;
+    fetch(mobile ? tour.donneesMobile : tour.donnees)
       .then((r) => (r.ok ? r.json() : null))
-      .then((j: DonneesTour | null) => j && setDonnees(j))
+      .then((j: DonneesTour | null) => !annule && j && setDonnees(j))
       .catch(() => {});
-  }, []);
+    return () => {
+      annule = true;
+    };
+  }, [mobile]);
 
   // Cover the stage with the frame (the landing screens sit near the centre of it).
   const placer = useCallback(() => {
     const scene = sceneRef.current;
     if (!scene) return;
-    const L = donnees?.largeur ?? 1280;
-    const H = donnees?.hauteur ?? 720;
+    const L = donnees?.largeur ?? (mobile ? 1080 : 1920);
+    const H = donnees?.hauteur ?? (mobile ? 1920 : 1080);
     const cw = scene.clientWidth;
     const ch = scene.clientHeight;
     const s = Math.max(cw / L, ch / H);
     setBoite({ x: (cw - L * s) / 2, y: (ch - H * s) / 2, w: L * s, h: H * s, cw, ch });
-  }, [donnees]);
+  }, [donnees, mobile]);
 
   useEffect(() => {
     placer();
@@ -232,7 +259,7 @@ export function Tour({ sectionRef, titre, noms, libelleEtage, afficheur, mobile,
         return;
       }
       v.preload = "auto";                       // Safari loads nothing with preload="none", even after load()
-      const adresse = window.matchMedia("(min-width: 48rem)").matches ? tour.bureau : tour.mobile;
+      const adresse = window.matchMedia("(max-width: 47.99rem)").matches ? tour.mobile : tour.bureau;
       /* The WHOLE file is downloaded first, then played from memory: scrubbing a video that is still
          streaming makes every jump past the downloaded part wait for the network (the jerks seen in
          production). Progress feeds the loading bar; until then each floor shows its still. */
@@ -334,7 +361,7 @@ export function Tour({ sectionRef, titre, noms, libelleEtage, afficheur, mobile,
 
   // On a landing the camera pushes in until the screen fills about three quarters of the view,
   // and pulls back out before the elevator. Phones keep the wide shot (the content flows below).
-  const cible = allume && !mobile ? rectEcran(z.segment) : null;
+  const cible = allume ? rectEcran(z.segment) : null;
   let zoom = "none";
   if (cible && boite) {
     const k = Math.min(1.05, Math.max(1, Math.min((0.9 * boite.cw) / cible.w, (0.86 * boite.ch) / cible.h)));
@@ -350,7 +377,7 @@ export function Tour({ sectionRef, titre, noms, libelleEtage, afficheur, mobile,
         {/* Until the video arrives, the approach's first frame. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={tour.affiche}
+          src={mobile ? tour.afficheMobile : tour.affiche}
           alt=""
           aria-hidden
           fetchPriority="high"
@@ -363,7 +390,7 @@ export function Tour({ sectionRef, titre, noms, libelleEtage, afficheur, mobile,
             // eslint-disable-next-line @next/next/no-img-element
             <img
               key={id}
-              src={`/labs/tour/v3/${id}.jpg`}
+              src={`${mobile ? tour.dossierMobile : tour.dossier}/${id}.jpg`}
               alt=""
               aria-hidden
               loading="lazy"
@@ -388,8 +415,7 @@ export function Tour({ sectionRef, titre, noms, libelleEtage, afficheur, mobile,
         {/* The wall screens (desktop). On a phone the content flows in the page instead.
             No box of their own: the content is light added onto the real screen of the frame
             (mix-blend screen), projected onto its four measured corners, edges feathered. */}
-        {!mobile &&
-          boite &&
+        {boite &&
           LANDINGS.map((id) => {
             const e = donnees?.segments[id]?.ecran;
             if (!e) return null;
@@ -399,7 +425,8 @@ export function Tour({ sectionRef, titre, noms, libelleEtage, afficheur, mobile,
             const largeurPx = (Math.hypot(coins[1][0] - coins[0][0], coins[1][1] - coins[0][1]) + Math.hypot(coins[2][0] - coins[3][0], coins[2][1] - coins[3][1])) / 2;
             const hauteurPx = (Math.hypot(coins[3][0] - coins[0][0], coins[3][1] - coins[0][1]) + Math.hypot(coins[2][0] - coins[1][0], coins[2][1] - coins[1][1])) / 2;
             const ratio = largeurPx / hauteurPx;
-            const W = Math.max(ECRAN_L, ECRAN_H * ratio);
+            // Phones: always laid out at phone width (a wide billboard just gets a short layout).
+            const W = mobile ? ECRAN_L_MOBILE : Math.max(ECRAN_L, ECRAN_H * ratio);
             const H = W / ratio;
             const ici = allume && z?.segment === id;
             return (
@@ -414,8 +441,8 @@ export function Tour({ sectionRef, titre, noms, libelleEtage, afficheur, mobile,
                 <div className="labs-ecran-contenu absolute inset-0">
                   {zones.map((zz, n) =>
                     zz.segment === id && zz.mode === "tenue" ? (
-                      <div key={n} className="labs-page absolute inset-0" data-visible={n === zone ? "" : undefined} inert={n !== zone}>
-                        {ecran(n)}
+                      <div key={n} className="labs-page absolute inset-0 overflow-hidden" data-visible={n === zone ? "" : undefined} inert={n !== zone}>
+                        <Ajuste hauteur={H}>{ecran(n)}</Ajuste>
                       </div>
                     ) : null,
                   )}

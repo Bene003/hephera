@@ -15,9 +15,14 @@ export type ProjetId = "hephetion" | "ruby" | "studio";
  *  rectangle of each landing come from tour.json; the scroll layout below never changes. */
 export const tour = {
   bureau: "/labs/tour/v3/tour-1600.mp4",
-  mobile: "/labs/tour/v3/tour-960.mp4",
   donnees: "/labs/tour/v3/tour.json",
   affiche: "/labs/tour/v3/A.jpg",
+  /** Phones get their own vertical tower (9:16), with portrait wall screens. */
+  mobile: "/labs/tour/v3/mobile/tour-720.mp4",
+  donneesMobile: "/labs/tour/v3/mobile/tour.json",
+  afficheMobile: "/labs/tour/v3/mobile/A.jpg",
+  dossierMobile: "/labs/tour/v3/mobile",
+  dossier: "/labs/tour/v3",
 } as const;
 
 export type SegmentId = "A" | "P0" | "M1" | "P1" | "M2" | "P2" | "M3" | "P3" | "M4" | "T";

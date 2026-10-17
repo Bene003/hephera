@@ -113,20 +113,8 @@ export function Labs({ locale }: { locale: Locale }) {
             data-zone={n}
             id={z.mode === "tenue" && premiereZone(z.couche!) === n ? `couche-${z.couche}` : undefined}
             className="pointer-events-none relative"
-            style={{ minHeight: `${z.hauteur}svh` }}
-          >
-            {/* Phones: the screen's light scrolls up over the held frame (taller than the
-                screen itself, so it flows instead of being pinned and cut off). */}
-            {mobile && z.mode === "tenue" && (
-              <div className="relative px-4 pt-[30svh] pb-[30svh]">
-                <div className="labs-ecran labs-ecran-mobile pointer-events-auto rounded-2xl" data-allume={n === zone ? "" : undefined}>
-                  <div className="labs-ecran-contenu relative p-5">
-                    <ContenuEcran locale={locale} zone={n} actif={n === zone} onFiche={ouvrirFiche} />
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+            style={{ height: `${z.hauteur}svh` }}
+          />
         ))}
       </section>
 
@@ -157,7 +145,7 @@ function ContenuEcran({ locale, zone, actif, onFiche }: { locale: Locale; zone: 
     const p = t.projets[projet.id];
     const Demo = DEMOS[projet.id];
     return (
-      <div className="grid h-full gap-8 md:grid-cols-[0.85fr_1.15fr] md:items-center md:p-10">
+      <div className="grid min-h-full content-center gap-6 px-6 py-7 md:grid-cols-[0.85fr_1.15fr] md:items-center md:gap-8 md:p-10">
         <div>
           {entete}
           <p className="mt-6 text-xs tracking-wide text-bone-300">{p.categorie}</p>
@@ -181,7 +169,7 @@ function ContenuEcran({ locale, zone, actif, onFiche }: { locale: Locale; zone: 
   }
 
   return (
-    <div className="flex h-full flex-col justify-center md:px-16">
+    <div className="flex min-h-full flex-col justify-center px-6 py-7 md:px-16 md:py-0">
       {entete}
       <h2 className="mt-6 max-w-3xl font-display text-4xl leading-[1.1] font-semibold text-balance text-bone-50 md:text-5xl">
         {c === "toit" ? t.ctaTitre : t.couches[c].titre}
