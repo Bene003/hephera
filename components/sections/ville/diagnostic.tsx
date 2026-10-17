@@ -95,7 +95,7 @@ export function Diagnostic({ locale }: { locale: Locale }) {
   };
 
   return (
-    <div className="mt-8 md:mt-0">
+    <div className="mt-4 md:mt-0">
       <form onSubmit={lancer} className="flex flex-col gap-2 sm:flex-row" noValidate>
         <label htmlFor="diag-url" className="sr-only">{t.label}</label>
         <input
@@ -117,7 +117,7 @@ export function Diagnostic({ locale }: { locale: Locale }) {
         </button>
       </form>
 
-      <div aria-live="polite" className="mt-5">
+      <div aria-live="polite" className="mt-3 md:mt-5">
         {etat === "analyse" && <p className="text-sm text-bone-300">{t.attente}</p>}
         {etat === "erreur" && <p role="alert" className="text-sm text-ember-200">{erreur}</p>}
         {etat === "fait" && res && (

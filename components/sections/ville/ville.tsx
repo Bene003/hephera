@@ -21,6 +21,7 @@ const CONFIG: ConfigVoyage = {
   transits: ordreVille.filter((s) => s !== "R0"),
   lieux: lieuxVille,
   zoomMax: 1.3,           // the Forge's screens sit further away than the tower's
+  largeurEcran: 700,      // laid out narrower than the tower's (970): bigger text on the city's screens
 };
 
 const SERVICES: ServiceKey[] = ["web", "seo", "automation", "consulting"];
@@ -133,16 +134,16 @@ function EcranVille({ locale, dict, zone, actif }: { locale: Locale; dict: Dicti
       {t.lieux[lieu]}
     </p>
   );
-  const cadre = "flex min-h-full flex-col justify-center px-6 py-7 md:px-14 md:py-0";
+  const cadre = "flex min-h-full flex-col justify-center px-5 py-5 md:px-14 md:py-0";
 
   if (lieu === "forge") {
     return (
       // The guide stands in front of this screen's lower left: the text keeps to the right.
       <div className={`${cadre} md:items-end md:text-right`}>
         {entete}
-        <h2 className="mt-5 max-w-xl font-display text-4xl leading-[1.1] font-semibold text-balance text-bone-50 md:text-5xl">{t.forgeTitre}</h2>
-        <p className="mt-4 max-w-lg text-lg leading-relaxed text-bone-100">{t.forgeTexte}</p>
-        <p className="mt-7 max-w-lg font-display text-xl text-bone-50">
+        <h2 className="mt-3 md:mt-5 max-w-xl font-display text-4xl leading-[1.1] font-semibold text-balance text-bone-50 md:text-5xl">{t.forgeTitre}</h2>
+        <p className="mt-2 md:mt-4 max-w-lg text-lg leading-relaxed text-bone-100">{t.forgeTexte}</p>
+        <p className="mt-4 md:mt-7 max-w-lg font-display text-xl text-bone-50">
           {dict.manifesto.lineOne} <span className="labs-braise-texte">{dict.manifesto.lineTwo}</span>
         </p>
       </div>
@@ -152,20 +153,20 @@ function EcranVille({ locale, dict, zone, actif }: { locale: Locale; dict: Dicti
   if (SERVICES.includes(lieu as ServiceKey)) {
     const s = dict.serviceContent[lieu as ServiceKey];
     return (
-      <div className={`${cadre} md:grid md:grid-cols-[1fr_0.9fr] md:items-center md:gap-10`}>
+      <div className={cadre}>
         <div>
           {entete}
-          <h2 className="mt-5 font-display text-4xl font-semibold text-bone-50">{s.name}</h2>
+          <h2 className="mt-3 md:mt-5 font-display text-4xl font-semibold text-bone-50">{s.name}</h2>
           <p className="mt-2 text-lg text-ember-200">{s.tagline}</p>
-          <p className="mt-4 max-w-lg leading-relaxed text-bone-100">{s.short}</p>
+          <p className="mt-2 md:mt-4 max-w-lg leading-relaxed text-bone-100">{s.short}</p>
           <Link
             href={serviceHref(locale, lieu as ServiceKey)}
-            className="mt-7 inline-flex min-h-11 items-center gap-2 rounded-full border border-ember-400/40 px-5 text-sm font-medium text-bone-50 transition-colors hover:bg-ember-500/10 focus-visible:outline-2 focus-visible:outline-ember-400"
+            className="mt-4 md:mt-7 inline-flex min-h-11 items-center gap-2 rounded-full border border-ember-400/40 px-5 text-sm font-medium text-bone-50 transition-colors hover:bg-ember-500/10 focus-visible:outline-2 focus-visible:outline-ember-400"
           >
             {t.voirService} <ArrowRight className="size-4" aria-hidden />
           </Link>
         </div>
-        <ul className="mt-7 grid gap-3 md:mt-0">
+        <ul className="mt-4 grid gap-2 sm:grid-cols-2 sm:gap-x-6 md:mt-6">
           {s.bullets.map((b, i) => (
             <li key={b} className="labs-apparition flex items-center gap-3 text-bone-100" style={{ animationDelay: actif ? `${150 + i * 110}ms` : undefined }}>
               <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-ember-400 shadow-[0_0_10px_rgba(255,157,66,0.9)]" />
@@ -182,19 +183,18 @@ function EcranVille({ locale, dict, zone, actif }: { locale: Locale; dict: Dicti
     return (
       <div className={cadre}>
         {entete}
-        <h2 className="mt-5 font-display text-4xl font-semibold text-bone-50">{t.atelierTitre}</h2>
+        <h2 className="mt-3 md:mt-5 font-display text-4xl font-semibold text-bone-50">{t.atelierTitre}</h2>
         <p className="mt-3 max-w-2xl text-lg leading-relaxed text-bone-100">{t.atelierTexte}</p>
-        <p className="mt-7 text-xs tracking-[0.2em] text-ember-300 uppercase">{t.methodeTitre}</p>
-        <ol className="mt-3 grid gap-4 md:grid-cols-4">
+        <p className="mt-4 md:mt-7 text-xs tracking-[0.2em] text-ember-300 uppercase">{t.methodeTitre}</p>
+        <ol className="mt-3 grid grid-cols-2 gap-x-6 gap-y-3 md:mt-4">
           {m.steps.map((s) => (
-            <li key={s.n}>
+            <li key={s.n} className="flex items-baseline gap-2.5">
               <span className="font-display text-sm text-ember-300 tabular-nums">{s.n}</span>
-              <p className="mt-1 font-display text-lg font-semibold text-bone-50">{s.title}</p>
-              <p className="mt-1 text-sm leading-relaxed text-bone-300">{s.description}</p>
+              <span className="font-display text-lg font-semibold text-bone-50">{s.title}</span>
             </li>
           ))}
         </ol>
-        <Link href={`/${locale}/${aProposSlug[locale]}`} className="mt-7 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-ember-300 hover:text-ember-200">
+        <Link href={`/${locale}/${aProposSlug[locale]}`} className="mt-4 md:mt-7 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-ember-300 hover:text-ember-200">
           {t.aPropos} <ArrowRight className="size-4" aria-hidden />
         </Link>
       </div>
@@ -205,9 +205,9 @@ function EcranVille({ locale, dict, zone, actif }: { locale: Locale; dict: Dicti
     return (
       <div className={cadre}>
         {entete}
-        <h2 className="mt-5 max-w-2xl font-display text-4xl leading-[1.1] font-semibold text-balance text-bone-50">{t.tourTitre}</h2>
-        <p className="mt-4 max-w-xl text-lg leading-relaxed text-bone-100">{t.tourTexte}</p>
-        <div className="mt-8">
+        <h2 className="mt-3 md:mt-5 max-w-2xl font-display text-4xl leading-[1.1] font-semibold text-balance text-bone-50">{t.tourTitre}</h2>
+        <p className="mt-2 md:mt-4 max-w-xl text-lg leading-relaxed text-bone-100">{t.tourTexte}</p>
+        <div className="mt-4 md:mt-8">
           <ButtonLink href={`/${locale}/labs`} withArrow>
             {t.tourCta}
           </ButtonLink>
@@ -218,12 +218,12 @@ function EcranVille({ locale, dict, zone, actif }: { locale: Locale; dict: Dicti
 
   // The square: the guide holds out his tablet.
   return (
-    <div className={`${cadre} md:grid md:grid-cols-[0.8fr_1.2fr] md:items-center md:gap-10`}>
+    <div className={cadre}>
       <div>
         {entete}
-        <h2 className="mt-5 font-display text-4xl leading-[1.1] font-semibold text-balance text-bone-50">{t.placeTitre}</h2>
-        <p className="mt-4 max-w-md text-lg leading-relaxed text-bone-100">{t.placeTexte}</p>
-        <div className="mt-8">
+        <h2 className="mt-3 md:mt-5 font-display text-4xl leading-[1.1] font-semibold text-balance text-bone-50">{t.placeTitre}</h2>
+        <p className="mt-2 md:mt-4 max-w-md text-lg leading-relaxed text-bone-100">{t.placeTexte}</p>
+        <div className="mt-4 md:mt-8">
           <ButtonLink href={`/${locale}/contact`} withArrow>
             {dict.nav.cta}
           </ButtonLink>

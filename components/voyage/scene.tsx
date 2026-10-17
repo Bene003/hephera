@@ -78,6 +78,8 @@ export type ConfigVoyage = {
   /** how far the camera may push in toward a lit screen (1.05 by default: the video does the close-up;
    *  higher when the scene's screens are far, at the cost of a slightly softer picture) */
   zoomMax?: number;
+  /** width (px) the screen content is laid out at before being scaled onto the wall: smaller = bigger text */
+  largeurEcran?: number;
 };
 /** The screen content is laid out once at this size, then scaled onto each wall. */
 export const ECRAN_L = 970;
@@ -478,7 +480,8 @@ export function SceneVoyage({ config, sectionRef, titre, noms, libelleEtage, aff
             const hauteurPx = (Math.hypot(coins[3][0] - coins[0][0], coins[3][1] - coins[0][1]) + Math.hypot(coins[2][0] - coins[1][0], coins[2][1] - coins[1][1])) / 2;
             const ratio = largeurPx / hauteurPx;
             // Phones: always laid out at phone width (a wide billboard just gets a short layout).
-            const W = mobile ? ECRAN_L_MOBILE : Math.max(ECRAN_L, ECRAN_H * ratio);
+            const base = config.largeurEcran ?? ECRAN_L;
+            const W = mobile ? ECRAN_L_MOBILE : Math.max(base, ECRAN_H * (base / ECRAN_L) * ratio);
             const H = W / ratio;
             const ici = allume && z?.segment === id;
             return (
