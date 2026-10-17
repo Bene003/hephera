@@ -104,7 +104,7 @@ export function Labs({ locale }: { locale: Locale }) {
           mobile={mobile}
           ecran={contenu}
           onZone={setZone}
-          onAller={allerA}
+          onAller={(c) => allerA(c as CoucheId)}
         />
 
         {zones.map((z, n) => (

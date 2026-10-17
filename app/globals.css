@@ -905,3 +905,11 @@ html[data-menu="open"] .page-shell::after {
     animation: none;
   }
 }
+/* A screen that already shows something in the frame (the Forge's blueprint): the content
+   switches it to its own channel instead of adding light on top. */
+.labs-ecran-contenu[data-opaque] {
+  background: linear-gradient(160deg, rgba(10, 10, 15, 0.94), rgba(7, 7, 10, 0.97));
+}
+.labs-ecran:has(.labs-ecran-contenu[data-opaque]) {
+  mix-blend-mode: normal;
+}
