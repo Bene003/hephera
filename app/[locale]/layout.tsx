@@ -5,6 +5,8 @@ import "../globals.css";
 
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { Carte } from "@/components/carte";
+import { VolTour } from "@/components/vol-tour";
 import { getDictionary } from "@/lib/content";
 import { isLocale, locales, SITE_URL } from "@/lib/i18n";
 
@@ -81,6 +83,8 @@ export default async function LocaleLayout({
           <main className="flex-1">{children}</main>
           <SiteFooter locale={locale} dict={dict} />
         </div>
+        <Carte locale={locale} />
+        <VolTour />
       </body>
     </html>
   );

@@ -68,6 +68,12 @@ export function Ville({ locale, dict }: { locale: Locale; dict: Dictionary }) {
     return () => window.removeEventListener("hashchange", aller);
   }, [allerA]);
 
+  // Tell the city map (components/carte.tsx) where the guide is. Stable: the engine depends on it.
+  const surZone = useCallback((n: number) => {
+    setZone(n);
+    window.dispatchEvent(new CustomEvent("ville:lieu", { detail: zonesVille[n]?.lieu }));
+  }, []);
+
   const contenu = useCallback(
     (n: number) => <EcranVille locale={locale} dict={dict} zone={n} actif={n === zone} />,
     [locale, dict, zone],
@@ -103,7 +109,7 @@ export function Ville({ locale, dict }: { locale: Locale; dict: Dictionary }) {
         afficheur={t.carte}
         mobile={mobile}
         ecran={contenu}
-        onZone={setZone}
+        onZone={surZone}
         onAller={allerA}
         iconeTransit={<MapPin className="size-4 text-ember-400" aria-hidden />}
         boutons="points"

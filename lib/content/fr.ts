@@ -14,6 +14,7 @@ export const fr = {
     figures: "Chiffres clés",
     about: "À propos",
     labs: "Labs",
+    carte: "Carte",
     contact: "Contact",
     cta: "Démarrer un projet",
     menu: "Menu",

@@ -14,6 +14,7 @@ export const en: Dictionary = {
     figures: "Key figures",
     about: "About",
     labs: "Labs",
+    carte: "Map",
     contact: "Contact",
     cta: "Start a project",
     menu: "Menu",
