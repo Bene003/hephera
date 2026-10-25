@@ -19,6 +19,9 @@ export const tour = {
   affiche: "/labs/tour/v3/A.jpg",
   /** Phones get their own vertical tower (9:16), with portrait wall screens. */
   mobile: "/labs/tour/v3/mobile/tour-720.mp4",
+  /** Light versions (12 fps), downloaded first: hephera-labs-medias/video_rapide.py */
+  bureauRapide: "/labs/tour/v3/tour-rapide.mp4",
+  mobileRapide: "/labs/tour/v3/mobile/tour-rapide.mp4",
   donneesMobile: "/labs/tour/v3/mobile/tour.json",
   afficheMobile: "/labs/tour/v3/mobile/A.jpg",
   dossierMobile: "/labs/tour/v3/mobile",

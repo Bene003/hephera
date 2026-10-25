@@ -14,6 +14,9 @@ export const lieuxVille: LieuVille[] = ["arrivee", "forge", "web", "seo", "autom
 export const fichiersVille = {
   bureau: "/accueil/ville/tour-1600.mp4",
   mobile: "/accueil/ville/mobile/tour-720.mp4",
+  // Versions légères (12 images/s), chargées d'abord : hephera-labs-medias/video_rapide.py
+  bureauRapide: "/accueil/ville/tour-rapide.mp4",
+  mobileRapide: "/accueil/ville/mobile/tour-rapide.mp4",
   donnees: "/accueil/ville/tour.json",
   donneesMobile: "/accueil/ville/mobile/tour.json",
   affiche: "/accueil/ville/A.jpg",

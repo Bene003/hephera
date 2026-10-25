@@ -60,6 +60,10 @@ export type DonneesVoyage = {
 export type ConfigVoyage = {
   bureau: string;
   mobile: string;
+  /** light versions (≈ 2-3 MB, 12 fps) downloaded first so scrolling drives the video within seconds;
+   *  the HD file then arrives in the background and takes over without a cut */
+  bureauRapide?: string;
+  mobileRapide?: string;
   donnees: string;
   donneesMobile: string;
   affiche: string;
@@ -78,6 +82,8 @@ export type ConfigVoyage = {
   /** how far the camera may push in toward a lit screen (1.05 by default: the video does the close-up;
    *  higher when the scene's screens are far, at the cost of a slightly softer picture) */
   zoomMax?: number;
+  /** same, on phones (the portrait screens are smaller in the frame: push in further so the text stays readable) */
+  zoomMaxMobile?: number;
   /** width (px) the screen content is laid out at before being scaled onto the wall: smaller = bigger text */
   largeurEcran?: number;
 };
@@ -86,6 +92,8 @@ export const ECRAN_L = 970;
 export const ECRAN_H = 540;
 /** Phones: portrait screens, laid out at phone width. */
 const ECRAN_L_MOBILE = 400;
+/** Same breakpoint as the pages' useMobile(). */
+const MOBILE = "(max-width: 47.99rem)";
 
 /** Shrinks its content just enough to fit the screen it is on: nothing is ever cut off. */
 function Ajuste({ hauteur, children }: { hauteur: number; children: ReactNode }) {
@@ -143,11 +151,13 @@ export function SceneVoyage({ config, sectionRef, titre, noms, libelleEtage, aff
   const tour = config;
   const sceneRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const videoHDRef = useRef<HTMLVideoElement>(null);   // the HD file, once it has caught up with the light one
   const titreRef = useRef<HTMLDivElement>(null);
   const [donnees, setDonnees] = useState<DonneesVoyage | null>(null);
   const [zone, setZone] = useState(0);
   const [boite, setBoite] = useState<(Rect & { cw: number; ch: number }) | null>(null);   // video box + stage size, px
   const [video, setVideo] = useState<"attente" | "ok" | "non">("attente");
+  const [hd, setHd] = useState(false);               // the HD player has taken over
   const [arrive, setArrive] = useState(false);       // second half of a climb: the display shows the new floor
   const [charge, setCharge] = useState(0);           // share of the video already downloaded
 
@@ -180,10 +190,23 @@ export function SceneVoyage({ config, sectionRef, titre, noms, libelleEtage, aff
     return () => window.removeEventListener("resize", placer);
   }, [placer]);
 
+  // Read through refs by the camera loop: when these change, the loop keeps running and the video
+  // is NOT downloaded again (it used to be fetched up to three times on a phone).
+  const donneesRef = useRef(donnees);
+  const placerRef = useRef(placer);
+  const onZoneRef = useRef(onZone);
+  useEffect(() => {
+    donneesRef.current = donnees;
+    placerRef.current = placer;
+    onZoneRef.current = onZone;
+  });
+
   useEffect(() => {
     const section = sectionRef.current;
-    const v = videoRef.current;
-    if (!section || !v) return;
+    const v0 = videoRef.current;
+    const v1 = videoHDRef.current;
+    if (!section || !v0 || !v1) return;
+    let v = v0;                          // the player the scroll drives (light file first, then HD)
     const espaceurs = [...section.querySelectorAll<HTMLElement>("[data-zone]")];
     const economie = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let zoneActuelle = -1;
@@ -193,9 +216,10 @@ export function SceneVoyage({ config, sectionRef, titre, noms, libelleEtage, aff
     let raf = 0;
     let visible = true;
     let dernierTic = performance.now();
-    let eveillee = false;               // Safari woken up (see reveiller)
+    const eveillees = new WeakSet<HTMLVideoElement>();   // players Safari has woken up (see reveiller)
 
     const segment = (id: string) => {
+      const donnees = donneesRef.current;
       if (donnees) {
         // A partial video (trial cut): missing segments hold on the last frame there is.
         const s = donnees.segments[id];
@@ -227,7 +251,7 @@ export function SceneVoyage({ config, sectionRef, titre, noms, libelleEtage, aff
       if (i !== zoneActuelle) {
         zoneActuelle = i;
         setZone(i);
-        onZone(i);
+        onZoneRef.current(i);
       }
       // The title card belongs to the first metres of the approach.
       if (titreRef.current) {
@@ -256,31 +280,36 @@ export function SceneVoyage({ config, sectionRef, titre, noms, libelleEtage, aff
       if (visible) raf = requestAnimationFrame(boucle);
     };
 
-    const onSeeked = () => {
-      enCours = false;
+    const onSeeked = (e: Event) => {
+      if (e.target === v) enCours = false;
     };
-    const onPlay = () => {
-      if (eveillee) v.pause();
+    const onPlay = (e: Event) => {
+      const el = e.target as HTMLVideoElement;
+      if (eveillees.has(el)) el.pause();
     };
-    v.addEventListener("play", onPlay);
-    const onErreur = () => {
+    const onErreur = (e: Event) => {
+      if (e.target !== v) return;        // a failed HD file: stay on the light one
       enCours = false;
       setVideo("non");
     };
-    const onMeta = () => {
+    const onMeta = (e: Event) => {
+      if (e.target !== v0) return;
       setVideo("ok");
-      placer();
+      placerRef.current();
     };
     const onProgres = () => {
-      const d = v.duration;
-      if (!Number.isFinite(d) || d <= 0 || !v.buffered.length) return;
-      setCharge((c) => Math.max(c, Math.min(1, v.buffered.end(v.buffered.length - 1) / d)));
+      const d = v0.duration;
+      if (!Number.isFinite(d) || d <= 0 || !v0.buffered.length) return;
+      setCharge((c) => Math.max(c, Math.min(1, v0.buffered.end(v0.buffered.length - 1) / d)));
     };
-    v.addEventListener("progress", onProgres);
-    v.addEventListener("canplaythrough", onProgres);
-    v.addEventListener("seeked", onSeeked);
-    v.addEventListener("error", onErreur);
-    v.addEventListener("loadedmetadata", onMeta);
+    v0.addEventListener("progress", onProgres);
+    v0.addEventListener("canplaythrough", onProgres);
+    for (const el of [v0, v1]) {
+      el.addEventListener("play", onPlay);
+      el.addEventListener("seeked", onSeeked);
+      el.addEventListener("error", onErreur);
+      el.addEventListener("loadedmetadata", onMeta);
+    }
 
     const vigie = new IntersectionObserver(([e]) => {
       visible = e?.isIntersecting ?? true;
@@ -305,36 +334,72 @@ export function SceneVoyage({ config, sectionRef, titre, noms, libelleEtage, aff
       }
     }, 33);
 
-    // The video waits for the page to load and the browser to be idle. Data saving: stills only.
+    // The video waits for the page to load (a short idle at most: it is what the visitor waits for). Data saving: stills only.
     let attente = 0;
     const charger = () => {
-      if ((navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData) {
+      const connexion = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+      if (connexion?.saveData) {
         setVideo("non");
         return;
       }
-      v.preload = "auto";                       // Safari loads nothing with preload="none", even after load()
-      const adresse = window.matchMedia("(max-width: 47.99rem)").matches ? tour.mobile : tour.bureau;
-      /* The WHOLE file is downloaded first, then played from memory: scrubbing a video that is still
+      const telephone = window.matchMedia(MOBILE).matches;
+      const adresseHD = telephone ? tour.mobile : tour.bureau;
+      const rapide = telephone ? tour.mobileRapide : tour.bureauRapide;
+      // On a slow connection the light file is all we load (the HD one would take minutes).
+      const lent = /(^|-)2g$|^3g$/.test(connexion?.effectiveType ?? "");
+      const premiere = rapide ?? adresseHD;
+      /* Each file is downloaded WHOLE first, then played from memory: scrubbing a video that is still
          streaming makes every jump past the downloaded part wait for the network (the jerks seen in
          production). Progress feeds the loading bar; until then each floor shows its still. */
-      enMemoire(adresse)
+      for (const el of [v0, v1]) el.preload = "auto";   // Safari loads nothing with preload="none", even after load()
+      enMemoire(premiere, true)
         .then((url) => {
           if (annule) return;
-          v.src = url;
-          v.load();
+          v0.src = url;
+          v0.load();
           reveiller();
+          if (rapide && !lent) enMemoire(adresseHD, false).then(basculer).catch(() => {});
         })
         .catch(() => {
           if (annule) return;
-          v.src = adresse;                       // no fetch streaming: let the browser stream it
-          v.load();
+          v0.src = premiere;                       // no fetch streaming: let the browser stream it
+          v0.load();
           reveiller();
         });
     };
+    /* The HD file is ready: it is put on the same frame as the light one, then shown on top; the light
+       one is emptied (memory). The scroll keeps driving whichever player is active: no cut, no jump. */
+    const basculer = (url: string) => {
+      if (annule) return;
+      v1.src = url;
+      v1.load();
+      const caler = () => {
+        v1.currentTime = v.currentTime;
+        v1.addEventListener(
+          "seeked",
+          () => {
+            if (annule) return;
+            v = v1;
+            enCours = false;
+            setHd(true);
+            window.setTimeout(() => {
+              if (annule) return;
+              v0.removeAttribute("src");
+              v0.load();
+              URL.revokeObjectURL(urlsMemoire[0] ?? "");
+            }, 800);
+          },
+          { once: true },
+        );
+      };
+      v1.addEventListener("loadeddata", caler, { once: true });
+      reveiller();
+    };
     let annule = false;
-    let urlMemoire = "";
-    const enMemoire = async (adresse: string) => {
-      const rep = await fetch(adresse);
+    const urlsMemoire: string[] = [];
+    const arret = new AbortController();
+    const enMemoire = async (adresse: string, barre: boolean) => {
+      const rep = await fetch(adresse, { signal: arret.signal });
       if (!rep.ok || !rep.body) throw new Error(String(rep.status));
       const taille = Number(rep.headers.get("content-length")) || 0;
       const lecteur = rep.body.getReader();
@@ -345,35 +410,39 @@ export function SceneVoyage({ config, sectionRef, titre, noms, libelleEtage, aff
         if (done || annule) break;
         morceaux.push(value);
         recu += value.length;
-        if (taille) setCharge(Math.min(0.99, recu / taille));
+        if (taille && barre) setCharge(Math.min(0.99, recu / taille));
       }
-      setCharge(1);
-      urlMemoire = URL.createObjectURL(new Blob(morceaux as BlobPart[], { type: "video/mp4" }));
-      return urlMemoire;
+      if (annule) throw new Error("annulé");
+      if (barre) setCharge(1);
+      const url = URL.createObjectURL(new Blob(morceaux as BlobPart[], { type: "video/mp4" }));
+      urlsMemoire.push(url);
+      return url;
     };
     /* Safari (iPhone first) decodes and buffers nothing until play() has been called once, so
        seeking does nothing: a muted, inline play() then an immediate pause() wakes it up. A refused
        play() (low power mode) is tried again on the first touch or key press. */
     const reveiller = () => {
-      if (eveillee || !v.src) return;
-      v.muted = true;
-      v.setAttribute("muted", "");             // Safari reads the attribute, React only sets the property
-      const essai = v.play();
-      if (!essai) return;
-      essai
-        .then(() => {
-          eveillee = true;
-          v.pause();
-          v.currentTime = Math.max(0, lisse);
-        })
-        .catch(() => {});
+      for (const el of [v0, v1]) {
+        if (eveillees.has(el) || !el.getAttribute("src")) continue;
+        el.muted = true;
+        el.setAttribute("muted", "");           // Safari reads the attribute, React only sets the property
+        const essai = el.play();
+        if (!essai) continue;
+        essai
+          .then(() => {
+            eveillees.add(el);
+            el.pause();
+            if (el === v) el.currentTime = Math.max(0, lisse);
+          })
+          .catch(() => {});
+      }
     };
     window.addEventListener("touchstart", reveiller, { passive: true });
     window.addEventListener("pointerdown", reveiller);
     window.addEventListener("keydown", reveiller);
     const plusTard = () => {
       const w = window as Window & { requestIdleCallback?: (f: () => void, o?: { timeout: number }) => number };
-      attente = w.requestIdleCallback ? w.requestIdleCallback(charger, { timeout: 1500 }) : window.setTimeout(charger, 300);
+      attente = w.requestIdleCallback ? w.requestIdleCallback(charger, { timeout: 250 }) : window.setTimeout(charger, 50);
     };
     if (document.readyState === "complete") plusTard();
     else window.addEventListener("load", plusTard, { once: true });
@@ -382,7 +451,8 @@ export function SceneVoyage({ config, sectionRef, titre, noms, libelleEtage, aff
     return () => {
       if (raf) cancelAnimationFrame(raf);
       annule = true;
-      if (urlMemoire) URL.revokeObjectURL(urlMemoire);
+      arret.abort();
+      urlsMemoire.forEach((u) => URL.revokeObjectURL(u));
       window.clearTimeout(attente);
       window.clearInterval(secours);
       window.removeEventListener("scroll", surDefilement);
@@ -391,14 +461,16 @@ export function SceneVoyage({ config, sectionRef, titre, noms, libelleEtage, aff
       window.removeEventListener("keydown", reveiller);
       window.removeEventListener("resize", surDefilement);
       vigie.disconnect();
-      v.removeEventListener("seeked", onSeeked);
-      v.removeEventListener("play", onPlay);
-      v.removeEventListener("error", onErreur);
-      v.removeEventListener("loadedmetadata", onMeta);
-      v.removeEventListener("progress", onProgres);
-      v.removeEventListener("canplaythrough", onProgres);
+      for (const el of [v0, v1]) {
+        el.removeEventListener("seeked", onSeeked);
+        el.removeEventListener("play", onPlay);
+        el.removeEventListener("error", onErreur);
+        el.removeEventListener("loadedmetadata", onMeta);
+      }
+      v0.removeEventListener("progress", onProgres);
+      v0.removeEventListener("canplaythrough", onProgres);
     };
-  }, [sectionRef, donnees, onZone, placer, zones, ordre, transits, tour.bureau, tour.mobile]);
+  }, [sectionRef, zones, ordre, transits, tour.bureau, tour.mobile, tour.bureauRapide, tour.mobileRapide]);
 
   const z = zones[zone];
   const allume = z?.mode === "tenue";
@@ -414,11 +486,11 @@ export function SceneVoyage({ config, sectionRef, titre, noms, libelleEtage, aff
   };
 
   // On a landing the camera pushes in until the screen fills about three quarters of the view,
-  // and pulls back out before the elevator. Phones keep the wide shot (the content flows below).
+  // and pulls back out before the elevator. Phones push in up to zoomMaxMobile when the scene sets it.
   const cible = allume ? rectEcran(z.segment) : null;
   let zoom = "none";
   if (cible && boite) {
-    const k = Math.min(config.zoomMax ?? 1.05, Math.max(1, Math.min((0.9 * boite.cw) / cible.w, (0.86 * boite.ch) / cible.h)));
+    const k = Math.min((mobile ? config.zoomMaxMobile : undefined) ?? config.zoomMax ?? 1.05, Math.max(1, Math.min((0.9 * boite.cw) / cible.w, (0.86 * boite.ch) / cible.h)));
     const cx = cible.x + cible.w / 2;
     const cy = cible.y + cible.h / 2;
     zoom = `translate(${boite.cw / 2}px, ${boite.ch / 2}px) scale(${k.toFixed(4)}) translate(${-cx}px, ${-cy}px)`;
@@ -429,42 +501,45 @@ export function SceneVoyage({ config, sectionRef, titre, noms, libelleEtage, aff
       <div className="labs-camera absolute inset-0">
         <div className="labs-zoom absolute inset-0 origin-top-left" style={{ transform: zoom }}>
         {/* Until the video arrives, the approach's first frame. */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={mobile ? tour.afficheMobile : tour.affiche}
-          alt=""
-          aria-hidden
-          fetchPriority="high"
-          className="absolute inset-0 size-full object-cover transition-opacity duration-700"
-          style={{ opacity: video === "ok" ? 0 : 1 }}
-          onError={(e) => (e.currentTarget.style.display = "none")}
-        />
-        {video !== "ok" &&
-          paliers.map((id) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              key={id}
-              src={`${mobile ? tour.dossierMobile : tour.dossier}/${id}.jpg`}
-              alt=""
-              aria-hidden
-              loading="lazy"
-              className="absolute inset-0 size-full object-cover transition-opacity duration-700"
-              style={{ opacity: z?.segment === id ? 1 : 0 }}
-            />
-          ))}
-        <video
-          ref={videoRef}
-          muted
-          playsInline
-          preload="none"
-          aria-hidden
-          className="absolute max-w-none transition-opacity duration-500"
-          style={
-            boite
-              ? { left: boite.x, top: boite.y, width: boite.w, height: boite.h, opacity: video === "ok" ? 1 : 0 }
-              : { inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0 }
-          }
-        />
+        {/* The phone or desktop poster is chosen by the browser from the first HTML (<picture>):
+            no desktop picture downloaded then swapped on a phone once the script runs. */}
+        <picture>
+          <source media={MOBILE} srcSet={tour.afficheMobile} />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={tour.affiche}
+            alt=""
+            aria-hidden
+            fetchPriority="high"
+            className="absolute inset-0 size-full object-cover transition-opacity duration-700"
+            style={{ opacity: video === "ok" ? 0 : 1 }}
+            onError={(e) => (e.currentTarget.style.display = "none")}
+          />
+        </picture>
+        {/* Until the video is there, the current landing's still (only that one is downloaded). */}
+        {video !== "ok" && z && paliers.includes(z.segment) && (
+          <picture key={z.segment}>
+            <source media={MOBILE} srcSet={`${tour.dossierMobile}/${z.segment}.jpg`} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={`${tour.dossier}/${z.segment}.jpg`} alt="" aria-hidden className="labs-apparition absolute inset-0 size-full object-cover" />
+          </picture>
+        )}
+{[videoRef, videoHDRef].map((ref, n) => (
+          <video
+            key={n}
+            ref={ref}
+            muted
+            playsInline
+            preload="none"
+            aria-hidden
+            className="absolute max-w-none transition-opacity duration-500"
+            style={
+              boite
+                ? { left: boite.x, top: boite.y, width: boite.w, height: boite.h, opacity: video === "ok" && (n === 1) === hd ? 1 : 0 }
+                : { inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0 }
+            }
+          />
+        ))}
 
         {/* The wall screens (desktop). On a phone the content flows in the page instead.
             No box of their own: the content is light added onto the real screen of the frame
